@@ -77,7 +77,7 @@ public class P13 {
 			results.add(Long.parseLong(lastTen));
 		}
 		s.close();
-		return ArrayUtils.toArray(results);
+		return ArrayUtils.toArrayL(results);
 	}
 
 }

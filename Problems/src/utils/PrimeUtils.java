@@ -13,7 +13,7 @@ public class PrimeUtils {
 			input = input / primeFactor;
 		}
 		
-		return ArrayUtils.toArray(list);
+		return ArrayUtils.toArrayL(list);
 	}
 	
 	public static boolean isPrime(long num) {
@@ -38,7 +38,7 @@ public class PrimeUtils {
 		HashSet<Long> divisors = new HashSet<Long>();
 		_computeDivisorsUsingPrimeFactors(num, divisors);
 		divisors.add(1L);
-		return ArrayUtils.toArray(divisors);
+		return ArrayUtils.toArrayL(divisors);
 	}
 	
 	public static List<Long> divisorsList(long num) {

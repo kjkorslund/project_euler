@@ -72,7 +72,7 @@ public class P23 {
 				list.add((long)i);
 			}
 		}
-		return ArrayUtils.toArray(list);
+		return ArrayUtils.toArrayL(list);
 	}
 	
 	static boolean isAbundant(long n) {

@@ -14,7 +14,7 @@ public class ArrayUtils {
 		return result;
 	}
 	
-	public static long[] toArray(Collection<Long> collection) {
+	public static long[] toArrayL(Collection<Long> collection) {
 		long[] result = new long[collection.size()];
 		
 		int index = 0;
