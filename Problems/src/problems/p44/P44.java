@@ -1,5 +1,6 @@
 package problems.p44;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class P44 {
@@ -17,19 +18,65 @@ public class P44 {
 	 * value of D?
 	 */
 	public static void main(String[] args) {
+		// New approach. I know the difference itself must be pentagonal, and
+		// I am looking for the minimal difference. If I start with the
+		// smallest possible pentagonal and iterate up, as long as I can analyze
+		// each possible answer in a bounded fashion, I can trivially solve
+		// this.
+		//
+		// The trick is putting an upper bound on computing the potential pairs
+		// for the difference. But I think I can take advantage of the formula
+		// for pentagonal numbers. Each successive pair of numbers is
+		// increasingly distant from each other, and eventually successive pairs
+		// will be so far apart that even the difference between successive
+		// pairs will be larger than the target difference. We can stop at that
+		// point.
 		
-		for(int i=1; i<10000;i++) {
-			for(int j=1;j<10000;j++) {
-				long pi = pentagonal(i);
-				long pj = pentagonal(j);
-//				if (isPentagonal(pi+pj)) {
-//					//System.out.println("[+] " + pi + "," + pj);
-//				}
-//				if (isPentagonal(pj-pi)) {
-//					//System.out.println("[-] " + pi + "," + pj);
-//				}
+		int cap = 1000;
+		System.out.println("Starting test");
+		for(long n=1; n<cap; n++) {
+			if (n%100 == 0) {
+				System.out.println("Testing n=" + n + " (" + pentagonal(n) + ")");
+			}
+			Long result = testAnswer(n);
+			if (result != null) {
+				System.out.println("Match:  " + result);
+				return;
 			}
 		}
+		System.out.println("No match for n < " + cap);
+	}
+	
+	static Long testAnswer(long n) {
+		long pd = pentagonal(n);
+		
+		long m = n+1;
+		long p = pentagonal(m);
+		long pLast = pd;
+		while(p - pLast <= pd) {
+//			System.out.println("Looking for pPair for " + p);
+			Long pp = pPair(m,p,pd);
+			if (pp != null && isPentagonal(p + pp)) {
+				System.out.println("Match: " + Arrays.toString(new long[]{pd, p, pp, p + pp}));
+				return pd;
+			}
+			
+			pLast = p;
+			p = pentagonal(++m);
+		}
+		return null;
+	}
+
+	// For pentagonal p (index n), find the pentagonal pair that produces
+	// difference pd (if it exists)
+	static Long pPair(long n, long p, long pd) {
+//		long pp = pentagonal(++n);
+//		while (pp - p < pd) {
+//			pp = pentagonal(++n);
+//		}
+//		return (pp - p == pd) ? pp : null;
+		long pair = p + pd;
+		return (isPentagonal(pair)) ? pair : null;
 	}
 	
 	static boolean isPentagonal(long p) {
