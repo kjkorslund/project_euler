@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import utils.IntegerMath;
+import utils.MathUtils;
+import utils.Pair;
 import utils.SearchUtils;
 import utils.SearchUtils.Eval;
 import utils.SearchUtils.NotFoundException;
@@ -37,59 +39,68 @@ public class P44 {
 		// pairs will be larger than the target difference. We can stop at that
 		// point.
 		
-//		long pLast = 0;
-//		for(long n=1; n<10000000000L; n++) {
-//			long p = pentagonal(n);
-//			if (p < pLast) {
-//				System.out.println(n);
-//				System.out.println(p);
-//				System.out.println(pLast);
-//				break;
-//			}
-//		}
-//		System.out.println("Done");
-		
 		int cap = 10000;
 		System.out.println("Starting test");
 		for(long n=1; n<cap; n++) {
 			if (n%100 == 0) {
 				System.out.println("Testing n=" + n + " (" + pentagonal(n) + ")");
 			}
-			Long result = testAnswer(n);
+			Pair<Long> result = checkAnswer(n);
 			if (result != null) {
-				System.out.println("Match:  " + result);
+				System.out.println("Match:  " + n + " --> " + result);
+				long p1 = pentagonal(result.first);
+				long p2 = pentagonal(result.second);
+				System.out.println("  " + (p2-p1)
+						+ ", " + p1
+						+ ", " + p2
+						+ ", " + (p1+p2));
 				return;
 			}
 		}
 		System.out.println("No match for n < " + cap);
 		
-//		long t = System.currentTimeMillis();
-//		for(long n = 100000; n < 100010; n++) {
-//			long p = pentagonal(n);
-//			isPentagonal2(n);
-//		}
-//		t = System.currentTimeMillis() - t;
-//		System.out.println("Time taken: " + t);
-		
-		
 	}
 	
-	static Long testAnswer(long n) {
-		long pd = pentagonal(n);
+	/**
+	 * @param nTarget
+	 * @return pair of (n,m) for which p(n) - p(m) = p(nTarget), and
+	 *         isPentagonal(p(n) + p(m))...or null if no such pair exists.
+	 */
+	static Pair<Long> checkAnswer(long nTarget) {
+		// The formula is always increasing (term?) - p(n+1) is always greater than p(n).
+		// This means we can make the following assumptions:
+		// - If p(n) - p(m) < pDiff, then p(n-1) - p(m) will also be less than pDiff, and
+		//   p(n) - p(m+1) will also be < pDiff
+		// - If p(n) - p(m) > pDiff, then [reverse of above]
+		//
+		// The algorithm below implements an efficient search algorithm for
+		// pairs of numbers. It works by starting from some n and m, and always
+		// incrementing either n or m depending on whether the different between
+		// them is higher or lower than the target. Because of the pentagonal
+		// formula, eventually the difference between p(n) and p(n+1) will
+		// become greater than the target difference. At that point the
+		// algorithm will increment n such that n==m. At that point, we know
+		// that it is impossible for future values of n and m to produce a
+		// result.
+		//
 		
-		long m = n+1;
-		long p = pentagonal(m);
-		long pLast = pd;
-		while(p - pLast <= pd) {
-//			System.out.println("Looking for pPair for " + p);
-			Long pp = pPair(m,p,pd);
-			if (pp != null && isPentagonal(p + pp)) {
-				System.out.println("Match: " + Arrays.toString(new long[]{pd, p, pp, p + pp}));
-				return pd;
+		long pTarget = pentagonal(nTarget);
+		
+		long n = 1;
+		long m = nTarget;
+		while(m > n) {
+			long pn = pentagonal(n);
+			long pm = pentagonal(m);
+			long pDiff = pm-pn;
+			if (pDiff > pTarget) n++;
+			else if (pDiff < pTarget) m++;
+			else {
+				long pSum = pn+pm;
+				if (isPentagonal(pSum)) {
+					return new Pair<Long>(n,m);
+				}
+				m++;
 			}
-			
-			pLast = p;
-			p = pentagonal(++m);
 		}
 		return null;
 	}

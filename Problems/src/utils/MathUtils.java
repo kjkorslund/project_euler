@@ -61,4 +61,10 @@ public class MathUtils {
 		// Should never reach this point, but just in case...
 		return 1;
 	}
+	
+	public static int sgn(long n) {
+		if (n > 0) return 1;
+		if (n < 0) return -1;
+		return 0;
+	}
 }
