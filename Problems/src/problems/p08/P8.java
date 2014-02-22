@@ -1,4 +1,4 @@
-package problems.p8;
+package problems.p08;
 
 import java.io.StringReader;
 

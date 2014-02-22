@@ -1,4 +1,4 @@
-package problems.p7;
+package problems.p07;
 
 import utils.PrimeUtils;
 

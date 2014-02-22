@@ -1,4 +1,4 @@
-package problems.p376;
+package problems_300s.p376;
 
 import java.util.HashMap;
 import java.util.Iterator;
