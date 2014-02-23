@@ -1,6 +1,7 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -92,5 +93,18 @@ public class PrimeUtils {
 			}
 		}
 		return input;
+	}
+	
+	private static HashMap<Long, Long> nextPrimeMap = new HashMap<>();
+	public static long nextPrime(long n) {
+		return nextPrime(n,true);
+	}
+	public static long nextPrime(long n, boolean cacheResult) {
+		if (nextPrimeMap.containsKey(n)) return nextPrimeMap.get(n);
+		
+		long l = n;
+		while(!PrimeUtils.isPrime(++l));
+		if (cacheResult) nextPrimeMap.put(n, l);
+		return l;
 	}
 }
