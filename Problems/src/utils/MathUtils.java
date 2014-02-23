@@ -12,6 +12,18 @@ public class MathUtils {
 		return result;
 	}
 	
+	public static long pow(long base, long exponent) {
+		long limit = Long.MAX_VALUE / base;
+		long result = 1;
+		for(int i=0; i<exponent; i++) {
+			if (result > limit) {
+				throw new IllegalArgumentException();
+			}
+			result *= base;
+		}
+		return result;
+	}
+	
 	public static int sumUpTo(int num) {
 		int result = 0;
 		for(int i=0; i<=num; i++) result += i;
