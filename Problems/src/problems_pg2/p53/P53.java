@@ -1,5 +1,9 @@
 package problems_pg2.p53;
 
+import java.math.BigInteger;
+
+import utils.BigMathUtils;
+
 public class P53 {
 	/*
 	 * There are exactly ten ways of selecting three from five, 12345:
@@ -18,6 +22,23 @@ public class P53 {
 	 * greater than one-million?
 	 */
 	public static void main(String[] args) {
+		BigInteger threshold = BigInteger.valueOf(1000000);
 		
+		int count = 0;
+		for(int n=1; n<=100; n++) {
+			for(int r=1; r<n; r++) {
+				if (calculateNCR(n, r).compareTo(threshold) > 0) {
+					count++;
+				}
+			}
+		}
+		System.out.println(count);
+	}
+	
+	private static BigInteger calculateNCR(int n, int r) {
+		BigInteger nFactorial = BigMathUtils.factorial(n);
+		BigInteger rFactorial = BigMathUtils.factorial(r);
+		BigInteger nrFactorial = BigMathUtils.factorial(n-r);
+		return nFactorial.divide(rFactorial.multiply(nrFactorial));
 	}
 }
