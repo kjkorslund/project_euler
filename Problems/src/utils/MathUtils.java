@@ -67,4 +67,38 @@ public class MathUtils {
 		if (n < 0) return -1;
 		return 0;
 	}
+	
+	public static long min(long... ns) {
+		switch(ns.length) {
+		case 0:
+			throw new IllegalArgumentException();
+		case 1:
+			return ns[0];
+		case 2:
+			return Math.min(ns[0], ns[1]);
+		default:
+			long min = Math.min(ns[0], ns[1]);
+			for(int i=2; i<ns.length; i++) {
+				min = Math.min(min, ns[i]);
+			}
+			return min;
+		}
+	}
+	
+	public static long max(long... ns) {
+		switch(ns.length) {
+		case 0:
+			throw new IllegalArgumentException();
+		case 1:
+			return ns[0];
+		case 2:
+			return Math.max(ns[0], ns[1]);
+		default:
+			long max = Math.max(ns[0], ns[1]);
+			for(int i=2; i<ns.length; i++) {
+				max = Math.max(max, ns[i]);
+			}
+			return max;
+		}
+	}
 }
