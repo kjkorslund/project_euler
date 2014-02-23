@@ -48,7 +48,6 @@ public class P51 {
 
 	private static PrimeFamily getLargestFamily(long prime) {
 		PrimeFamily largestFamily = null;
-		int size = 0;
 		for(PrimeFamily primeFamily : getPrimeFamilies(prime)) {
 			if (largestFamily == null || largestFamily.members.size() < primeFamily.members.size()) {
 				largestFamily = primeFamily;
