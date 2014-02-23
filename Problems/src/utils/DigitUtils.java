@@ -53,15 +53,15 @@ public class DigitUtils {
 		return result;
 	}
 	
-	public static int[] getDigits(int num) {
+	public static int[] getDigits(long num) {
 		return getDigits(10,num);
 	}
 	
-	public static int[] getDigits(int base, int num) {
+	public static int[] getDigits(int base, long num) {
 		LinkedList<Integer> digitList = new LinkedList<Integer>();
 		
 		while(num > 0) {
-			digitList.addFirst(num%base);
+			digitList.addFirst((int)(num%base));
 			num = num / base;
 		}
 		return ArrayUtils.toArray(digitList);
@@ -72,7 +72,6 @@ public class DigitUtils {
 	}
 	
 	public static long composeFromDigitsBase(int base, int... digits) {
-		int m = 1;
 		long result = 0;
 		for(int i=0; i<digits.length; i++) {
 			result = result*base + digits[i];
