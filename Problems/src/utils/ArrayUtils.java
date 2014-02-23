@@ -1,6 +1,10 @@
 package utils;
 
 import java.util.Collection;
+import java.util.List;
+
+import utils.numarraylist.IntArrayList;
+import utils.numarraylist.LongArrayList;
 
 public class ArrayUtils {
 	public static int[] toArray(Collection<Integer> collection) {
@@ -23,5 +27,13 @@ public class ArrayUtils {
 		}
 		
 		return result;
+	}
+	
+	public static List<Integer> asList(int[] array) {
+		return new IntArrayList(array);
+	}
+	
+	public static List<Long> asList(long[] array) {
+		return new LongArrayList(array);
 	}
 }
