@@ -4,4 +4,8 @@ public class PokerEvaluator {
 	public int evaluate(Hand p1, Hand p2) {
 		
 	}
+	
+	public RankedCardSet getHighestRankedCardSet(Hand hand) {
+		
+	}
 }

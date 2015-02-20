@@ -3,7 +3,7 @@ package problems_pg2.p54.pokermodel;
 import java.util.Comparator;
 
 
-public enum Rank {
+public enum CardRank {
 	ACE(1),
 	TWO(2),
 	THREE(3),
@@ -20,7 +20,7 @@ public enum Rank {
 	
 	private final int rankOrdinal;
 	
-	private Rank(int rankOrdinal) {
+	private CardRank(int rankOrdinal) {
 		this.rankOrdinal = rankOrdinal;
 	}
 	
@@ -28,9 +28,9 @@ public enum Rank {
 		return rankOrdinal;
 	}
 	
-	public static Comparator<Rank> COMPARE_ACES_LOW = new RankComparator();
-	public static Comparator<Rank> COMPARE_ACES_HIGH = new RankComparator() {
-		protected int getRankOrdinal(Rank r) {
+	public static Comparator<CardRank> COMPARE_ACES_LOW = new RankComparator();
+	public static Comparator<CardRank> COMPARE_ACES_HIGH = new RankComparator() {
+		protected int getRankOrdinal(CardRank r) {
 			if (r == ACE) {
 				return KING.getRankOrdinal()+1;
 			}
@@ -38,13 +38,13 @@ public enum Rank {
 		};
 	};
 	
-	private static class RankComparator implements Comparator<Rank> {
+	private static class RankComparator implements Comparator<CardRank> {
 		@Override
-		public int compare(Rank r1, Rank r2) {
+		public int compare(CardRank r1, CardRank r2) {
 			return Integer.compare(getRankOrdinal(r1),getRankOrdinal(r2));
 		}
 		
-		protected int getRankOrdinal(Rank r) {
+		protected int getRankOrdinal(CardRank r) {
 			return r.getRankOrdinal();
 		}
 	}
