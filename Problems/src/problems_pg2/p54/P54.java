@@ -1,5 +1,16 @@
 package problems_pg2.p54;
 
+import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
+
+import problems_pg2.p54.pokermodel.Card;
+import problems_pg2.p54.pokermodel.CardRank;
+import problems_pg2.p54.pokermodel.HandRank;
+import problems_pg2.p54.pokermodel.PokerHandEvaluator;
+import problems_pg2.p54.pokermodel.Suit;
+
 public class P54 {
 	/*
 	 * In the card game poker, a hand consists of five cards and are ranked,
@@ -53,8 +64,43 @@ public class P54 {
 	 * How many hands does Player 1 win?
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		InputStream stream = P54.class.getResourceAsStream("poker.txt");
+		Scanner s = new Scanner(stream);
+		int count = 0;
+		int cap = 10;
 
+		PokerHandEvaluator evaluator = new PokerHandEvaluator();
+		while (s.hasNext() && count++ < cap) {
+			Set<Card> p1Cards = scanHand(s);
+			Set<Card> p2Cards = scanHand(s);
+			HandRank p1Rank = evaluator.evaluateHand(p1Cards);
+			HandRank p2Rank = evaluator.evaluateHand(p2Cards);
+			System.out.println("Player 1 cards: " + p1Cards);
+			System.out.println("Player 2 cards: " + p2Cards);
+			System.out.println("Player 1 rank: " + p1Rank);
+			System.out.println("Player 2 rank: " + p2Rank);
+			System.out.println("Player 1 wins? " + (p1Rank.compareTo(p2Rank) > 0));
+			System.out.println();
+		}
 	}
 
+	private static Set<Card> scanHand(Scanner s) {
+		HashSet<Card> hand = new HashSet<>();
+		hand.add(parseCard(s.next()));
+		hand.add(parseCard(s.next()));
+		hand.add(parseCard(s.next()));
+		hand.add(parseCard(s.next()));
+		hand.add(parseCard(s.next()));
+		return hand;
+	}
+	
+	private static Card parseCard(String s) {
+		CardRank rank = CardRank.forChar(s.charAt(0));
+		if (rank == null) throw new IllegalArgumentException();
+		
+		Suit suit = Suit.forChar(s.charAt(1));
+		if (suit == null) throw new IllegalArgumentException();
+		
+		return new Card(suit, rank);
+	}
 }
