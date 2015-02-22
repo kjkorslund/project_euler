@@ -1,5 +1,6 @@
 package problems_pg2.p54;
 
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -63,23 +64,25 @@ public class P54 {
 	 * How many hands does Player 1 win?
 	 */
 	public static void main(String[] args) {
-//		InputStream stream = P54.class.getResourceAsStream("poker.txt");
-//		Scanner s = new Scanner(stream);
+		InputStream stream = P54.class.getResourceAsStream("poker.txt");
+		Scanner s = new Scanner(stream);
 		
-		String testData =
-			  " AH KH QH JH TH" + " AD KD QD JD TD"
-			+ " AH AD AC TD TS" + " QH QC QS JS JD"
-			+ " AH AD TH TD KS" + " AS AC TS TD QS"
-			;
-		Scanner s = new Scanner(testData);
+//		String testData =
+//			  " AH KH QH JH TH" + " AD KD QD JD TD"
+//			+ " AH AD AC TD TS" + " QH QC QS JS JD"
+//			+ " AH AD TH TD KS" + " AS AC TS TD QS"
+//			;
+//		Scanner s = new Scanner(testData);
 		
 		System.out.println("Player 1 total wins: " + countP1Wins(s));
+		
+		s.close();
 	}
 	
 	private static int countP1Wins(Scanner s) {
 		int count = 0;
 		int rounds = 0;
-		int roundsCap = 10;
+		int roundsCap = 10000;
 
 		PokerHandEvaluator evaluator = new PokerHandEvaluator();
 		while (s.hasNext() && rounds++ < roundsCap) {
@@ -90,12 +93,12 @@ public class P54 {
 			boolean p1Wins = p1Rank.compareTo(p2Rank) > 0;
 			if (p1Wins) count++;
 			
-			System.out.println("Player 1 cards: " + p1Cards);
-			System.out.println("Player 2 cards: " + p2Cards);
-			System.out.println("Player 1 rank: " + p1Rank);
-			System.out.println("Player 2 rank: " + p2Rank);
-			System.out.println("Player 1 wins? " + p1Wins);
-			System.out.println();
+//			System.out.println("Player 1 cards: " + p1Cards);
+//			System.out.println("Player 2 cards: " + p2Cards);
+//			System.out.println("Player 1 rank: " + p1Rank);
+//			System.out.println("Player 2 rank: " + p2Rank);
+//			System.out.println("Player 1 wins? " + p1Wins);
+//			System.out.println();
 		}
 		
 		return count;
