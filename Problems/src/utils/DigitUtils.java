@@ -40,6 +40,15 @@ public class DigitUtils {
 		return true;
 	}
 	
+	public static boolean isPalindromic(int base, int num) {
+		int[] digits = getDigits(base, num);
+		for(int i=0,j=digits.length-1; i<j; i++, j--) {
+			if (digits[i] == digits[j]) continue;
+			return false;
+		}
+		return true;
+	}
+	
 	public static int getDigitCount(int num) {
 		return getDigitCount(10,num);
 	}
