@@ -18,34 +18,39 @@ public enum CardRank {
 	QUEEN(12),
 	KING(13);
 	
-	private final int rankOrdinal;
+	private final int value;
 	
-	private CardRank(int rankOrdinal) {
-		this.rankOrdinal = rankOrdinal;
+	private CardRank(int value) {
+		this.value = value;
 	}
 	
-	public int getRankOrdinal() {
-		return rankOrdinal;
+	public int getValueAcesLow() {
+		return value;
 	}
 	
-	public static Comparator<CardRank> COMPARE_ACES_LOW = new RankComparator();
-	public static Comparator<CardRank> COMPARE_ACES_HIGH = new RankComparator() {
-		protected int getRankOrdinal(CardRank r) {
-			if (r == ACE) {
-				return KING.getRankOrdinal()+1;
-			}
-			return super.getRankOrdinal(r);
-		};
-	};
+	public int getValueAcesHigh() {
+		return (this == ACE) ? KING.value + 1 : value;
+	}
 	
-	private static class RankComparator implements Comparator<CardRank> {
+	public static Comparator<CardRank> comparatorAcesLow() {
+		return new AcesLowComparator();
+	}
+	
+	public static Comparator<CardRank> comparatorAcesHigh() {
+		return new AcesHighComparator();
+	}
+	
+	private static class AcesLowComparator implements Comparator<CardRank> {
 		@Override
 		public int compare(CardRank r1, CardRank r2) {
-			return Integer.compare(getRankOrdinal(r1),getRankOrdinal(r2));
+			return Integer.compare(r1.getValueAcesLow(),r2.getValueAcesLow());
 		}
-		
-		protected int getRankOrdinal(CardRank r) {
-			return r.getRankOrdinal();
+	}
+	
+	private static class AcesHighComparator implements Comparator<CardRank> {
+		@Override
+		public int compare(CardRank r1, CardRank r2) {
+			return Integer.compare(r1.getValueAcesLow(),r2.getValueAcesLow());
 		}
 	}
 }
