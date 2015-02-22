@@ -218,7 +218,7 @@ public class PokerHandEvaluator {
 			Iterator<CardRank> iter = ranks.descendingIterator();
 			if (!iter.hasNext()) return null;
 			
-			TreeSet<CardRank> results = new TreeSet<>();
+			TreeSet<CardRank> results = new TreeSet<>(CardRank.comparatorAcesHigh());
 			results.add(iter.next());
 			while(iter.hasNext()) {
 				CardRank rank = iter.next();
@@ -228,7 +228,7 @@ public class PokerHandEvaluator {
 						return results;
 					}
 				} else {
-					results = new TreeSet<>();
+					results = new TreeSet<>(CardRank.comparatorAcesHigh());
 					results.add(rank);
 				}
 			}
