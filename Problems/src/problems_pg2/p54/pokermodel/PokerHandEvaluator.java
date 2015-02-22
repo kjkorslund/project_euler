@@ -13,7 +13,7 @@ import java.util.TreeSet;
  * @author Kevin
  *
  */
-public abstract class PokerHandEvaluator {
+public class PokerHandEvaluator {
 	public HandRank evaluateHand(Collection<Card> cards) {
 		Evaluator e = new Evaluator(cards);
 		return e.evaluate();
