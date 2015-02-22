@@ -90,9 +90,9 @@ public class PokerHandEvaluator {
 		}
 		
 		private Set<CardRank> bestRoyalFlush() {
-			Set<CardRank> bestStraightFlush = bestStraightFlush();
-			if (bestStraightFlush.contains(CardRank.ACE)) {
-				return bestStraightFlush;
+			Set<CardRank> result = bestStraightFlush();
+			if (result != null && result.contains(CardRank.ACE)) {
+				return result;
 			}
 			return null;
 		}
