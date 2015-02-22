@@ -66,7 +66,7 @@ public enum CardRank {
 	private static class AcesHighComparator implements Comparator<CardRank> {
 		@Override
 		public int compare(CardRank r1, CardRank r2) {
-			return Integer.compare(r1.getValueAcesLow(),r2.getValueAcesLow());
+			return Integer.compare(r1.getValueAcesHigh(),r2.getValueAcesHigh());
 		}
 	}
 }

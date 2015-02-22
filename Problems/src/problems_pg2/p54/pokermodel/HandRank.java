@@ -55,6 +55,12 @@ public class HandRank implements Comparable<HandRank> {
 		
 		return compareSets(unusedCardRanks, o.unusedCardRanks);
 	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "HandRank{" + hand + ", " + usedCardRanks + ", " + unusedCardRanks + "}";
+	}
 
 	private static <T extends Comparable<T>> int compareSets(NavigableSet<T> first, NavigableSet<T> second) {
 		Iterator<T> firstIter = first.descendingIterator();
@@ -63,7 +69,7 @@ public class HandRank implements Comparable<HandRank> {
 		while(firstIter.hasNext() && secondIter.hasNext()) {
 			T t1 = firstIter.next();
 			T t2 = secondIter.next();
-			int result = t1.compareTo(t2);
+			int result = first.comparator().compare(t1,t2);
 			if (result != 0) {
 				return result;
 			}
