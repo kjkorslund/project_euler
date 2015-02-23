@@ -40,7 +40,11 @@ public class DigitUtils {
 		return true;
 	}
 	
-	public static boolean isPalindromic(int base, int num) {
+	public static boolean isPalindromic(long num) {
+		return isPalindromic(10, num);
+	}
+	
+	public static boolean isPalindromic(int base, long num) {
 		int[] digits = getDigits(base, num);
 		for(int i=0,j=digits.length-1; i<j; i++, j--) {
 			if (digits[i] == digits[j]) continue;
@@ -86,5 +90,22 @@ public class DigitUtils {
 			result = result*base + digits[i];
 		}
 		return result;
+	}
+	
+	public static long reverse(long num) {
+		return reverseDigits(10, num);
+	}
+	
+	public static long reverseDigits(int base, long num) {
+		int[] digits = getDigits(base);
+		
+		// Reverse digits
+		for(int i=0,j=digits.length-1; i<j; i++, j--) {
+			int d = digits[i];
+			digits[i] = digits[j];
+			digits[j] = d;
+		}
+		
+		return composeFromDigitsBase(base, digits);
 	}
 }
