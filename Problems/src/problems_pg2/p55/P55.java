@@ -1,5 +1,10 @@
 package problems_pg2.p55;
 
+import java.math.BigInteger;
+
+import utils.BigMathUtils;
+import utils.DigitUtils;
+
 public class P55 {
 	/* 
 	 * If we take 47, reverse and add, 47 + 74 = 121, which is palindromic.
@@ -34,6 +39,26 @@ public class P55 {
 	 * theoretical nature of Lychrel numbers.
 	 */
 	public static void main(String[] args) {
+//		long num = 10677;
+//		System.out.println("Is " + num + " Lychrel?  " + isLychrel(num, 50));
 		
+		int count = 0;
+		for(int i=0; i<10000; i++) {
+			if (isLychrel(i, 50)) count++;
+		}
+		System.out.println("Lychrel count: " + count);
+	}
+	
+	public static boolean isLychrel(long num, int maxIters) {
+		BigInteger big = BigInteger.valueOf(num);
+		int remainingIters = maxIters;
+		while(remainingIters-- > 0) {
+			big = big.add(BigMathUtils.reverseDigits(big));
+			if (BigMathUtils.isPalindromic(big)) {
+//				System.out.println("Identified as not Lychrel in " + (maxIters - remainingIters) + " iterations: " + num);
+				return false;
+			}
+		}
+		return true;
 	}
 }

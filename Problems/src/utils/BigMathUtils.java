@@ -46,7 +46,7 @@ public class BigMathUtils {
 		return result;
 	}
 	
-	public static boolean isPalindrome(BigInteger big) {
+	public static boolean isPalindromic(BigInteger big) {
 		ArrayList<BigInteger> digits = getDigits(big);
 		for(int i=0, j=digits.size()-1; i<j; i++, j--) {
 			if (digits.get(i).equals(digits.get(j))) continue;
