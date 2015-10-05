@@ -87,8 +87,9 @@ public class PrimeUtils {
 	}
 	
 	public static long firstPrimeFactor(long input) {
-		for(long l = 2; l*l <= input; l++) {
-			if (input%l == 0) {
+		if ((input & 1l) == 0l) return 2;
+		for(long l = 3; l*l <= input; l+=2) {
+			if (input%l == 0l) {
 				return l;
 			}
 		}
