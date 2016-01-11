@@ -1,5 +1,6 @@
 package utils;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class DigitUtils {
@@ -107,5 +108,20 @@ public class DigitUtils {
 		}
 		
 		return composeFromDigitsBase(base, digits);
+	}
+	
+	public static long concatenateDigits(long... nums) {
+		ArrayList<Integer> digitsList = new ArrayList<Integer>();
+		for(long num : nums) {
+			for(int digit : getDigits(num)) {
+				digitsList.add(digit);
+			}
+		}
+		
+		int[] digitsArr = new int[digitsList.size()];
+		for(int i = 0; i < digitsList.size(); i++) {
+			digitsArr[i] = digitsList.get(i);
+		}
+		return composeFromDigits(digitsArr);
 	}
 }

@@ -1,5 +1,12 @@
 package problems_pg2.p60;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.LinkedList;
+
+import utils.DigitUtils;
+import utils.PrimeUtils;
+
 public class P60 {
 
 	/*
@@ -14,7 +21,30 @@ public class P60 {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		System.out.println(isRemarkable(Arrays.asList(3, 7, 109, 673)));
 	}
 
+	/**
+	 * NOTE - for efficiency's sake, it is assumed that the caller has already
+	 * verified that all inputs are prime!
+	 * 
+	 * @param primes
+	 * @return
+	 */
+	private static boolean isRemarkable(Collection<Integer> primes) {
+		LinkedList<Integer> primesList = new LinkedList<Integer>(primes);
+		
+		while(!primesList.isEmpty()) {
+			int p1 = primesList.removeFirst();
+			for(int p2 : primesList) {
+				long pConcat = DigitUtils.concatenateDigits(p1, p2);
+				if (!PrimeUtils.isPrime(pConcat)) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+//	private static boolean 
 }
