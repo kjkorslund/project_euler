@@ -1,5 +1,9 @@
 package problems_pg2.p58;
 
+import java.util.Iterator;
+
+import utils.PrimeUtils;
+
 public class P58 {
 
 	/*
@@ -25,8 +29,60 @@ public class P58 {
 	 * primes along both diagonals first falls below 10%?
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int prime = 0;
+		int total = 1;
+		DiagonalIterator iter = new DiagonalIterator();
+		while (iter.next < Integer.MAX_VALUE) {
+			Integer num = iter.next();
+			if (PrimeUtils.isPrime(num)) {
+				prime++;
+			}
+			total++;
+			
+//			System.out.println("Ratio: " + prime + "/" + total + " (" + num + ")");
+//			if (iter.level == 1) {
+//				System.out.println("Completes square: " + num);
+//			}
+			
+			
+			if (iter.level == 1 && prime > 0 && prime*10 < total) {
+				System.out.println("Match found!  Ratio: " + prime + "/" + total);
+				System.out.println("Side length: " + (iter.increment - 1));
+				return;
+			}
+		}
+		System.out.println("No match found.  Final ratio: " + prime + "/" + total);
+		System.out.println("Side length: " + (iter.increment + 1));
 	}
 
+	private static class DiagonalIterator implements Iterator<Integer> {
+		int next = 1;
+		int increment = 2;
+		int level = 0;
+		
+		@Override
+		public boolean hasNext() {
+			return true;
+		}
+
+		@Override
+		public Integer next() {
+			int current = next;
+			
+			next += increment;
+			level++;
+			if (level == 4) {
+				level = 0;
+				increment += 2;
+			}
+			
+			return current;
+		}
+
+		@Override
+		public void remove() {
+			throw new UnsupportedOperationException();
+		}
+		
+	}
 }
