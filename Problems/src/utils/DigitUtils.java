@@ -1,17 +1,18 @@
 package utils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class DigitUtils {
-	public static int[] getDigitCounts(int num) {
+	public static int[] getDigitCounts(long num) {
 		return getDigitCounts(10,num);
 	}
 	
-	public static int[] getDigitCounts(int base, int num) {
+	public static int[] getDigitCounts(int base, long num) {
 		int[] result = new int[base];
 		while(num > 0) {
-			result[num % base]++;
+			result[(int)(num % base)]++;
 			num = num / base;
 		}
 		return result;
@@ -123,5 +124,9 @@ public class DigitUtils {
 			digitsArr[i] = digitsList.get(i);
 		}
 		return composeFromDigits(digitsArr);
+	}
+
+	public static boolean isDigitalPermutation(long l1, long l2) {
+		return Arrays.equals(getDigitCounts(l1), getDigitCounts(l2));
 	}
 }
