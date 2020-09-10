@@ -55,11 +55,11 @@ public class DigitUtils {
 		return true;
 	}
 	
-	public static int getDigitCount(int num) {
+	public static int getDigitCount(long num) {
 		return getDigitCount(10,num);
 	}
 	
-	public static int getDigitCount(int base, int num) {
+	public static int getDigitCount(long base, long num) {
 		int result = 0;
 		while(num > 0) {
 			result++;
