@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
+  <component name="ExternalSystem" linkedProjectPath="$USER_HOME$/IdeaProjects/Scratch/kotlin" rootProjectPath="$USER_HOME$/IdeaProjects/Scratch/kotlin" />
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/bin" />
     <exclude-output />

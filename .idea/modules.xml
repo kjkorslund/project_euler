@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Problems/Problems.iml" filepath="$PROJECT_DIR$/Problems/Problems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/java/Problems/Problems.iml" filepath="$PROJECT_DIR$/java/Problems/Problems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kotlin/ProjectEuler/ProjectEuler.iml" filepath="$PROJECT_DIR$/kotlin/ProjectEuler/ProjectEuler.iml" />
     </modules>
   </component>
 </project>
