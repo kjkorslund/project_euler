@@ -54,8 +54,8 @@ object P3: Problem<Long> {
 object P4: Problem<Long?> {
     override fun calculate(): Long? {
         var result: Long? = null
-        for(l1 in 999L downTo 1L) {
-            for (l2 in l1 downTo 1L) {
+        for(l1 in 999L downTo 100L) {
+            for (l2 in l1 downTo 100L) {
                 val product = l1*l2;
                 if (product.isPalindromic()) {
                     result = max(product, result ?: 0)
@@ -63,5 +63,32 @@ object P4: Problem<Long?> {
             }
         }
         return result
+    }
+}
+
+object P5: Problem<Long?> {
+    override fun calculate(): Long? {
+        return calculate(20L)
+    }
+
+    private fun calculate(largestDivisor: Long): Long? {
+        // Evaluate the range from largest to smallest, because the larger divisors may have the smaller divisors as
+        // divisors themselves.  Starting with the larger divisors allows for short-circuiting.
+        val divisors = largestDivisor downTo 2L
+
+        // Note: a simple strategy for the increment that will obviously work is to increment by the largest divisor.
+        // This performs okay for this problem, but it is SIGNIFICANTLY faster to increment instead by the product of
+        // all prime divisors.  The reason this works is less obvious, but it does work (I've tested it)
+        val primeDivisors = divisors.filter { it.isPrime() }
+        val increment = primeDivisors.reduce { acc, l -> acc * l }
+        println("Prime divisors: $primeDivisors")
+        println("Increment: $increment")
+
+        return generateSequence(increment) { it + increment }
+                .firstOrNull { candidate ->
+                    divisors.asSequence().all {
+                        candidate.isMultipleOf(it)
+                    }
+                }
     }
 }

@@ -9,7 +9,7 @@ interface Problem<T> {
 }
 
 fun main() {
-    val problem = P4
+    val problem = P5
     var answer: Any? = null
     val time = measureTimeMillis {
         answer = problem.calculate()
