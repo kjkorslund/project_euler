@@ -126,15 +126,15 @@ object P6: Problem<Long> {
 object P7: Problem<Long> {
     override fun calculate(): Long {
         val n = 10_001
-
         val primeSequence = primeSequence()
-        for(i in 1..10) {
-            var answer: Long? = null
-            val time = measureTimeMillis {
-                answer = primeSequence.elementAt(n - 1)
-            }
-            println("Answer #$i: $answer ($time ms)")
-        }
+
+//        for(i in 1..10) {
+//            var answer: Long? = null
+//            val time = measureTimeMillis {
+//                answer = primeSequence.elementAt(n - 1)
+//            }
+//            println("Answer #$i: $answer ($time ms)")
+//        }
 
         return primeSequence.elementAt(n - 1)
     }
