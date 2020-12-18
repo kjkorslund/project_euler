@@ -6,6 +6,7 @@ import util.numericextensions.*
 import util.primeSequence
 import kotlin.math.absoluteValue
 import kotlin.math.max
+import kotlin.system.measureTimeMillis
 
 /**
  * [Problem 1](https://projecteuler.net/problem=1): Find the sum of all the multiples of 3 or 5 below 1000.
@@ -125,6 +126,16 @@ object P6: Problem<Long> {
 object P7: Problem<Long> {
     override fun calculate(): Long {
         val n = 10_001
-        return primeSequence().elementAt(n - 1)
+
+        val primeSequence = primeSequence()
+        for(i in 1..10) {
+            var answer: Long? = null
+            val time = measureTimeMillis {
+                answer = primeSequence.elementAt(n - 1)
+            }
+            println("Answer #$i: $answer ($time ms)")
+        }
+
+        return primeSequence.elementAt(n - 1)
     }
 }
