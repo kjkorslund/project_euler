@@ -3,6 +3,7 @@ package problems
 
 import util.FibonacciGenerator
 import util.numericextensions.*
+import util.primeSequence
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -114,5 +115,16 @@ object P6: Problem<Long> {
     private fun Long.squareOfSums(): Long {
         val sum = (1..this).sum()
         return sum*sum
+    }
+}
+
+/**
+ * [Problem 7](https://projecteuler.net/problem=7)
+ * What is the 10,001st prime number?
+ */
+object P7: Problem<Long> {
+    override fun calculate(): Long {
+        val n = 10_001
+        return primeSequence().elementAt(n - 1)
     }
 }
