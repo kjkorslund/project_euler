@@ -1,15 +1,13 @@
 package problems
 
-import kotlin.reflect.KClass
 import kotlin.system.measureTimeMillis
-import kotlin.time.measureTime
 
 interface Problem<T> {
     fun calculate(): T
 }
 
 fun main() {
-    val problem = P5
+    val problem = P6
     var answer: Any? = null
     val time = measureTimeMillis {
         answer = problem.calculate()

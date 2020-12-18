@@ -1,7 +1,9 @@
+@file:Suppress("unused")
 package problems
 
 import util.FibonacciGenerator
 import util.numericextensions.*
+import kotlin.math.absoluteValue
 import kotlin.math.max
 
 /**
@@ -41,8 +43,8 @@ object P2: Problem<Int> {
  */
 object P3: Problem<Long> {
     override fun calculate(): Long {
-        val l = 600851475143L;
-        return l.findPrimeFactors().last();
+        val l = 600851475143L
+        return l.findPrimeFactors().last()
     }
 
 }
@@ -56,7 +58,7 @@ object P4: Problem<Long?> {
         var result: Long? = null
         for(l1 in 999L downTo 100L) {
             for (l2 in l1 downTo 100L) {
-                val product = l1*l2;
+                val product = l1*l2
                 if (product.isPalindromic()) {
                     result = max(product, result ?: 0)
                 }
@@ -66,12 +68,16 @@ object P4: Problem<Long?> {
     }
 }
 
+/**
+ * [Problem 5](https://projecteuler.net/problem=5)
+ * What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+ */
 object P5: Problem<Long?> {
     override fun calculate(): Long? {
         return calculate(20L)
     }
 
-    private fun calculate(largestDivisor: Long): Long? {
+    private fun calculate(@Suppress("SameParameterValue") largestDivisor: Long): Long? {
         // Evaluate the range from largest to smallest, because the larger divisors may have the smaller divisors as
         // divisors themselves.  Starting with the larger divisors allows for short-circuiting.
         val divisors = largestDivisor downTo 2L
@@ -85,10 +91,28 @@ object P5: Problem<Long?> {
         println("Increment: $increment")
 
         return generateSequence(increment) { it + increment }
-                .firstOrNull { candidate ->
-                    divisors.asSequence().all {
-                        candidate.isMultipleOf(it)
-                    }
-                }
+                .firstOrNull { candidate -> divisors.all { candidate.isMultipleOf(it) } }
+    }
+}
+
+/**
+ * [Problem 6](https://projecteuler.net/problem=6)
+ * Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+ */
+object P6: Problem<Long> {
+    override fun calculate(): Long {
+        val n = 100L
+        return (n.squareOfSums() - n.sumOfSquares()).absoluteValue
+    }
+
+    private fun Long.sumOfSquares(): Long {
+        return (1..this).asSequence()
+                .map { it*it }
+                .sum()
+    }
+
+    private fun Long.squareOfSums(): Long {
+        val sum = (1..this).sum()
+        return sum*sum
     }
 }
