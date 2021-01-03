@@ -4,15 +4,21 @@ import kotlin.system.measureTimeMillis
 
 interface Problem<T> {
     fun calculate(): T
+
+    fun name(): String? {
+        return this::class.simpleName
+    }
 }
 
 fun main() {
-    val problem = P7
-    var answer: Any? = null
-    val time = measureTimeMillis {
-        answer = problem.calculate()
+    val problems = listOf(P3, P5, P7, P9)
+    for (problem in problems) {
+        var answer: Any? = null
+        val time = measureTimeMillis {
+            answer = problem.calculate()
+        }
+        println("Answer for ${problem.name()}: $answer ($time ms)")
     }
-    println("Answer: $answer ($time ms)")
 
 
 //    println("Enter a problem to run, leave blank to quit")
