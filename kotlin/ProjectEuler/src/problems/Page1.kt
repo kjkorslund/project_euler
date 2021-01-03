@@ -2,8 +2,9 @@
 package problems
 
 import util.FibonacciGenerator
+import util.Primes
 import util.numericextensions.*
-import util.primeSequence
+import kotlin.concurrent.thread
 import kotlin.math.absoluteValue
 import kotlin.math.max
 import kotlin.system.measureTimeMillis
@@ -126,16 +127,15 @@ object P6: Problem<Long> {
 object P7: Problem<Long> {
     override fun calculate(): Long {
         val n = 10_001
-        val primeSequence = primeSequence()
 
 //        for(i in 1..10) {
 //            var answer: Long? = null
 //            val time = measureTimeMillis {
-//                answer = primeSequence.elementAt(n - 1)
+//                answer = Primes.sequence().elementAt(n - 1)
 //            }
 //            println("Answer #$i: $answer ($time ms)")
 //        }
 
-        return primeSequence.elementAt(n - 1)
+        return Primes.sequence().elementAt(n - 1)
     }
 }
