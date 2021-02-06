@@ -254,3 +254,29 @@ object P14: Problem<Pair<Long, Int>> {
         } else throw IllegalStateException("Discovered a violation of the Collatz Conjecture! ($current)")
     }
 }
+
+/**
+ * [Problem 15](https://projecteuler.net/problem=15)
+ * How many such routes (Lattice paths) are there through a 20×20 grid?
+ */
+object P15: Problem<Long> {
+    override fun calculate(): Long {
+        return PathCounter.countPaths(20 to 20)
+    }
+
+    private object PathCounter {
+        private val knownPathCounts = mutableMapOf<Pair<Int, Int>, Long>()
+
+        fun countPaths(gridDimensions: Pair<Int, Int>): Long {
+            return knownPathCounts.getOrPut(gridDimensions) {
+                when {
+                    gridDimensions.first == 0 -> 1L
+                    gridDimensions.second == 0 -> 1L
+                    else -> countPaths(Pair(gridDimensions.first-1, gridDimensions.second)) +
+                            countPaths(Pair(gridDimensions.first, gridDimensions.second-1))
+                }
+            }
+        }
+    }
+
+}
