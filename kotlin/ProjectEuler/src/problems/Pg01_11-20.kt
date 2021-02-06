@@ -4,6 +4,8 @@ package problems
 import util.numericextensions.*
 import java.lang.IllegalStateException
 import java.math.BigInteger
+import java.time.DayOfWeek
+import java.time.LocalDate
 import kotlin.math.max
 
 
@@ -399,5 +401,56 @@ object P18: Problem<Long> {
 //            println()
             combined
         }.first()
+    }
+}
+
+/**
+ * [Problem 19](https://projecteuler.net/problem=19)
+ * How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+ */
+object P19: Problem<Int> {
+    override fun calculate(): Int {
+        return sequence<LocalDate> {
+            for (year in 1901..2000) {
+                for (month in 1..12) {
+                    LocalDate.of(year, month, 1)
+//                        .also { println("$it is a ${it.dayOfWeek}") }
+                        .takeIf { it.dayOfWeek == DayOfWeek.SUNDAY }
+                        ?.let { yield(it) }
+                }
+            }
+        }
+//            .also { date -> date.forEach { println(it) } }
+            .count()
+    }
+
+}
+
+/**
+ * [Problem 20](https://projecteuler.net/problem=20)
+ * Find the sum of the digits in the number 100! (100 factorial)
+ */
+object P20: Problem<Long> {
+    override fun calculate(): Long {
+        val n: Long = 100
+        return BigInteger.valueOf(n).factorial()
+//            .also { println(it) }
+            .digits().toList().reversed()
+//            .also { println(it.joinToString(",")) }
+            .sum().toLong()
+    }
+
+    private fun BigInteger.factorial(): BigInteger {
+        return this.dec().let {
+            if (it == BigInteger.ONE) this else this*it.factorial()
+        }
+    }
+
+    private fun BigInteger.digits(): Sequence<Int> = sequence {
+        var remainder = this@digits
+        while(remainder > BigInteger.ONE) {
+            yield(remainder.mod(BigInteger.TEN).toInt())
+            remainder /= BigInteger.TEN
+        }
     }
 }
