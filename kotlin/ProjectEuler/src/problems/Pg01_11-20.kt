@@ -360,3 +360,44 @@ object P17: Problem<Long> {
         }
     }
 }
+
+/**
+ * [Problem 18](https://projecteuler.net/problem=18)
+ * Find the maximum total from top to bottom of the triangle (see website)
+ */
+object P18: Problem<Long> {
+    private val triangleStrings = listOf(
+        "75",
+        "95 64",
+        "17 47 82",
+        "18 35 87 10",
+        "20 04 82 47 65",
+        "19 01 23 75 03 34",
+        "88 02 77 73 07 63 67",
+        "99 65 04 28 06 16 70 92",
+        "41 41 26 56 83 40 80 70 33",
+        "41 48 72 33 47 32 37 16 94 29",
+        "53 71 44 65 25 43 91 52 97 51 14",
+        "70 11 33 28 77 73 17 78 39 68 17 57",
+        "91 71 52 38 17 14 91 43 58 50 27 29 48",
+        "63 66 04 68 89 53 67 30 73 16 69 87 40 31",
+        "04 62 98 27 23 09 70 98 73 93 38 53 60 04 23"
+    )
+
+    private val triangle = triangleStrings.map { it.split(' ').map(String::toLong)}
+    override fun calculate(): Long {
+//        fun Long.toStringPadded(len: Int) = this.toString().padStart(len, ' ')
+
+        return triangle.reduceRight {secondToLast, last ->
+//            println(last.joinToString(" ", transform = { it.toStringPadded(4)}));
+//            println(secondToLast.joinToString(" ", transform = { it.toStringPadded(4)}));
+
+            val combined = secondToLast.mapIndexed { index, it ->
+                max(it + last[index], it + last[index+1])
+            }
+//            println(combined.joinToString(" ", transform = { it.toStringPadded(4)}));
+//            println()
+            combined
+        }.first()
+    }
+}
