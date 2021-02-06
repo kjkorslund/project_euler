@@ -3,10 +3,7 @@ package problems
 
 import util.FibonacciGenerator
 import util.Primes
-import util.numericextensions.findPrimeFactors
-import util.numericextensions.isMultipleOf
-import util.numericextensions.isPalindromic
-import util.numericextensions.isPrime
+import util.numericextensions.*
 import kotlin.math.absoluteValue
 import kotlin.math.max
 
@@ -177,7 +174,7 @@ object P8: Problem<Long> {
 //        println("Digits:  $digits")
 
         val nAdjacent = 13
-        var maxProduct: Long = 0L
+        var maxProduct = 0L
         (nAdjacent..digits.size).forEach {
             val sublist = digits.subList(it-nAdjacent, it)
             val currentProduct = sublist.reduce(Long::times)
@@ -228,7 +225,7 @@ object P10: Problem<Long> {
  * the 20×20 grid?  (Note: see link for grid)
  */
 object P11: Problem<Long> {
-    val gridStr = """
+    private val gridStr = """
         08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
         49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
         81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -251,13 +248,13 @@ object P11: Problem<Long> {
         01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48
     """.trimIndent()
 
-    val gridList: List<Long> = gridStr.split(' ', '\r', '\n')
+    private val gridList: List<Long> = gridStr.split(' ', '\r', '\n')
             .map(String::toLong)
 
     override fun calculate(): Long {
 //        println(gridList)
 
-        var maxProduct: Long = 0L
+        var maxProduct = 0L
         for(row in 0..19) {
             for (col in 0..19) {
                 if (col+3 < 20) {
@@ -291,5 +288,41 @@ object P11: Problem<Long> {
 
     private fun valueAt(row: Int, col: Int): Long {
         return gridList[row*20 + col]
+    }
+}
+
+/**
+ * [Problem 12](https://projecteuler.net/problem=12)
+ * What is the value of the first triangle number to have over five hundred divisors?
+ */
+object P12: Problem<Long> {
+    override fun calculate(): Long {
+        return triangleNumbers().first {
+            it.findAllDivisors().size > 500
+        }
+    }
+
+    private fun triangleNumbers(): Sequence<Long> = sequence {
+        var nextIncrement = 1L
+        var value = 0L
+        while(true) {
+            value += nextIncrement++
+            yield(value)
+        }
+    }
+
+    private fun Long.findAllDivisors(): List<Long> {
+        // Strategy:  start with a set of {1}.  For each prime factor PF, set = union(set, set*PF)
+        return when {
+            this < 1L -> listOf()
+            this == 1L -> listOf(1L)
+            else -> {
+                val resultSet = mutableSetOf<Long>(1)
+                this.findPrimeFactors().forEach { primeFactor ->
+                    resultSet.addAll(resultSet.map { it*primeFactor })
+                }
+                return resultSet.sorted()
+            }
+        }
     }
 }
