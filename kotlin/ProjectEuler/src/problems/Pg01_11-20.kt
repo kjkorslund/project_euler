@@ -3,6 +3,7 @@ package problems
 
 import util.numericextensions.*
 import java.lang.IllegalStateException
+import java.math.BigInteger
 import kotlin.math.max
 
 
@@ -279,4 +280,83 @@ object P15: Problem<Long> {
         }
     }
 
+}
+
+/**
+ * [Problem 16](https://projecteuler.net/problem=16)
+ * What is the sum of the digits of the number 2^1000?
+ */
+object P16: Problem<Int> {
+    override fun calculate(): Int {
+        val input = BigInteger.valueOf(2L).pow(1000)
+        return input.toString().asSequence()
+            .map { (it - '0') }
+            .sum()
+    }
+}
+
+/**
+ * [Problem 17](https://projecteuler.net/problem=17)
+ * If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words, how many letters would be used?
+ */
+object P17: Problem<Long> {
+    override fun calculate(): Long {
+        return (1..1000)
+            .map { it.toWordString() }
+            .map { s -> s.filter { it.isLetter() }.length }
+            .sum().toLong()
+    }
+
+    private fun Int.toWordString(): String {
+        return when(this) {
+            0 -> "zero"
+            1 -> "one"
+            2 -> "two"
+            3 -> "three"
+            4 -> "four"
+            5 -> "five"
+            6 -> "six"
+            7 -> "seven"
+            8 -> "eight"
+            9 -> "nine"
+            10 -> "ten"
+            11 -> "eleven"
+            12 -> "twelve"
+            13 -> "thirteen"
+            14 -> "fourteen"
+            15 -> "fifteen"
+            16 -> "sixteen"
+            17 -> "seventeen"
+            18 -> "eighteen"
+            19 -> "nineteen"
+            20 -> "twenty"
+            30 -> "thirty"
+            40 -> "forty"
+            50 -> "fifty"
+            60 -> "sixty"
+            70 -> "seventy"
+            80 -> "eighty"
+            90 -> "ninety"
+            else -> when {
+                this >= 1000 -> {
+                    val count = this/1000
+                    val remainder = this%1000
+                    if (remainder == 0) "${count.toWordString()} thousand"
+                    else "${count.toWordString()} thousand ${remainder.toWordString()}"
+                }
+                this >= 100 -> {
+                    val count = this/100
+                    val remainder = this%100
+                    if (remainder == 0) "${count.toWordString()} hundred"
+                    else "${count.toWordString()} hundred and ${remainder.toWordString()}"
+                }
+                this >= 10 -> {
+                    val tens = this/10*10
+                    val remainder = this%10
+                    "${tens.toWordString()}-${remainder.toWordString()}"
+                }
+                else -> throw IllegalStateException("Number should have already been covered above: $this")
+            }
+        }
+    }
 }
