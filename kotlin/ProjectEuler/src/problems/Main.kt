@@ -11,7 +11,7 @@ interface Problem<T> {
 }
 
 fun main() {
-    val problems = listOf(P12)
+    val problems = listOf(P14)
     for (problem in problems) {
         var answer: Any? = null
         val time = measureTimeMillis {
