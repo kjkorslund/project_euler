@@ -43,7 +43,6 @@ object P11: Problem<Long> {
 
     override fun calculate(): Long {
 //        println(gridList)
-
         var maxProduct = 0L
         for(row in 0..19) {
             for (col in 0..19) {
@@ -88,7 +87,7 @@ object P11: Problem<Long> {
 object P12: Problem<Long> {
     override fun calculate(): Long {
         return triangleNumbers().first {
-            it.findAllDivisors().size > 500
+            it.findDivisors().size > 500
         }
     }
 
@@ -98,21 +97,6 @@ object P12: Problem<Long> {
         while(true) {
             value += nextIncrement++
             yield(value)
-        }
-    }
-
-    private fun Long.findAllDivisors(): List<Long> {
-        // Strategy:  start with a set of {1}.  For each prime factor PF, set = union(set, set*PF)
-        return when {
-            this < 1L -> listOf()
-            this == 1L -> listOf(1L)
-            else -> {
-                val resultSet = mutableSetOf<Long>(1)
-                this.findPrimeFactors().forEach { primeFactor ->
-                    resultSet.addAll(resultSet.map { it*primeFactor })
-                }
-                return resultSet.sorted()
-            }
         }
     }
 }

@@ -30,3 +30,18 @@ fun Long.findPrimeFactors(): List<Long> {
 }
 
 fun Long.isPalindromic() = toString().isPalindrome()
+
+fun Long.findDivisors(): List<Long> {
+    // Strategy:  start with a set of {1}.  For each prime factor PF, set = union(set, set*PF)
+    return when {
+        this < 1L -> listOf()
+        this == 1L -> listOf(1L)
+        else -> {
+            val resultSet = mutableSetOf<Long>(1)
+            this.findPrimeFactors().forEach { primeFactor ->
+                resultSet.addAll(resultSet.map { it*primeFactor })
+            }
+            return resultSet.sorted()
+        }
+    }
+}

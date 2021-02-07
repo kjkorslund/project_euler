@@ -1,5 +1,6 @@
 package problems
 
+import java.io.InputStreamReader
 import kotlin.system.measureTimeMillis
 
 interface Problem<T> {
@@ -8,10 +9,13 @@ interface Problem<T> {
     fun name(): String? {
         return this::class.simpleName
     }
+
+    fun <R> readResource(resource: String, block: (InputStreamReader) -> R): R =
+        Problem::class.java.getResourceAsStream(resource).reader().use(block)
 }
 
 fun main() {
-    val problems = listOf(P20)
+    val problems = listOf(P22)
     for (problem in problems) {
         var answer: Any? = null
         val time = measureTimeMillis {

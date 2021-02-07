@@ -18,11 +18,12 @@ object P64 : Problem<Int> {
  * Find the maximum total from top to bottom of the triangle (see p67_triangle.txt)
  */
 object P67: Problem<Long> {
-    private val triangleStrings = P67::class.java.getResourceAsStream("p67_triangle.txt").reader()
-        .useLines { it.toList() }
+    private val triangleStrings = this.readResource("p67_triangle.txt") { reader ->
+        reader.useLines { it.toList() }
+    }
 
     override fun calculate(): Long {
-//        triangleStrings.forEach { println(it) }
+        triangleStrings.forEach { println(it) }
 
         val triangle = triangleStrings.map { it.split(' ').map(String::toLong)}
         fun Long.toStringPadded(len: Int) = this.toString().padStart(len, ' ')
