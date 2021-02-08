@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package problems
 
-import util.FibonacciGenerator
+import util.Fibonacci
 import util.Primes
 import util.numericextensions.*
 import kotlin.math.absoluteValue
@@ -29,12 +29,10 @@ object P1 : Problem<Int> {
  */
 object P2: Problem<Int> {
     override fun calculate(): Int {
-        var sum = 0
-        for(i in FibonacciGenerator()) {
-            if (i.isEven()) sum += i
-            if (i > 4_000_000) break
-        }
-        return sum
+        return Fibonacci.intSequence()
+            .filter { it.isEven() }
+            .takeWhile { it <= 4_000_000 }
+            .sum()
     }
 }
 
