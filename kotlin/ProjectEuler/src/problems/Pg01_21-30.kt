@@ -2,6 +2,7 @@
 package problems
 
 import util.Fibonacci
+import util.Primes
 import util.numericextensions.*
 import util.stringextensions.lexicographicPermutations
 import java.lang.IllegalStateException
@@ -170,4 +171,37 @@ object P26: Problem<Int> {
         }
         return emptyList()
     }
+}
+
+/**
+ * Find the product of the coefficients, a and b, for the quadratic expression that produces the maximum number of
+ * primes for consecutive values of n, starting with n = 0.
+ */
+object P27: Problem<Int> {
+    override fun calculate(): Int {
+        val aRange = (-999 .. 999)
+        val bRange = (-999 .. 999)
+        val abSequence = sequence {
+            for (a in aRange) {
+                for (b in bRange) {
+                    yield(a to b)
+                }
+            }
+        }
+
+        return abSequence
+            .maxBy { quadraticSequence(it.first, it.second).count() }
+            .let { it.first * it.second }
+    }
+
+    private fun quadraticSequence(a: Int, b: Int): Sequence<Long> = sequence {
+        var n: Int = 0;
+        var result = quadraticFun(n, a, b);
+        while(Primes.isPrime(result)) {
+            yield(result);
+            result = quadraticFun(++n, a, b);
+        }
+    }
+
+    private fun quadraticFun(n: Int, a: Int, b: Int): Long = n.toLong().let { it*it + a*it + b }
 }
