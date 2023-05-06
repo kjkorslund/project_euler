@@ -205,3 +205,44 @@ object P27: Problem<Int> {
 
     private fun quadraticFun(n: Int, a: Int, b: Int): Long = n.toLong().let { it*it + a*it + b }
 }
+
+/*
+ * Starting with the number 1 and moving to the right in a clockwise
+ * direction a 5 by 5 spiral is formed as follows:
+ *
+ *     21 22 23 24 25
+ *     20  7  8  9 10
+ *     19  6  1  2 11
+ *     18  5  4  3 12
+ *     17 16 15 14 13
+ *
+ * It can be verified that the sum of the numbers on the diagonals is 101.
+ *
+ * What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral
+ * formed in the same way?
+ */
+object P28: Problem<Int> {
+    override fun calculate(): Int {
+        val sideLength = 1001;
+        return spiralDiagonals()
+            .takeWhile { it <= sideLength*sideLength }
+            .sum()
+    }
+
+    private fun spiralDiagonals(): Sequence<Int> = sequence {
+        // The initial yield (1) is the center of the spiral.  After that, the four corners of each subsequent 'shell'
+        // are yielded.  The corners of first shell have an increment of 2, and each subsequent shell has an increment 2
+        // more than the previous layer (e.g. 4 for the second layer, 6 for the 3rd layer, etc.)
+
+        var n = 1;
+        var increment = 2;
+        yield(n);
+
+        while(true) {
+            repeat(4) {
+                n = (n+increment).also { yield(it) }
+            }
+            increment += 2
+        }
+    }
+}
