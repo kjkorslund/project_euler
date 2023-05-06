@@ -83,3 +83,22 @@ fun Long.findDivisors(): List<Long> {
  * @see findDivisors
  */
 fun Long.findProperDivisors(): List<Long> = this.findDivisors().dropLast(1)
+
+/**
+ * Returns the sequence of base-10 digits composing this number, from smallest to largest place
+ */
+fun Long.digits(): Sequence<Int> = sequence {
+    var remainder = this@digits
+    while(remainder > 0) {
+        yield((remainder % 10).toInt())
+        remainder /= 10
+    }
+}
+
+fun Long.pow(exponent: Int): Long {
+    var result = 1L
+    repeat(exponent) {
+        result *= this
+    }
+    return result
+}
