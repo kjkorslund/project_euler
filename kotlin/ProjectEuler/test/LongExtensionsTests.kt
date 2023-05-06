@@ -1,5 +1,5 @@
 import org.junit.jupiter.api.Test
-import util.numericextensions.*
+import util.extensions.*
 
 class LongExtensionsTests {
     @Test

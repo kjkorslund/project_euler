@@ -1,7 +1,6 @@
-package util.numericextensions
+package util.extensions
 
 import util.Primes
-import util.stringextensions.isPalindrome
 
 /**
  * Returns `true` if this value is a multiple of another value

@@ -3,10 +3,9 @@ package problems
 
 import util.Fibonacci
 import util.Primes
-import util.numericextensions.*
-import util.stringextensions.lexicographicPermutations
-import java.lang.IllegalStateException
-import java.math.BigDecimal
+import util.extensions.cartesianProduct
+import util.extensions.*
+import util.extensions.lexicographicPermutations
 import java.math.BigInteger
 
 /**
@@ -181,15 +180,8 @@ object P27: Problem<Int> {
     override fun calculate(): Int {
         val aRange = (-999 .. 999)
         val bRange = (-999 .. 999)
-        val abSequence = sequence {
-            for (a in aRange) {
-                for (b in bRange) {
-                    yield(a to b)
-                }
-            }
-        }
 
-        return abSequence
+        return aRange.cartesianProduct(bRange)
             .maxBy { quadraticSequence(it.first, it.second).count() }
             .let { it.first * it.second }
     }

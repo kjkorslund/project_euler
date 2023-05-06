@@ -1,4 +1,4 @@
-package util.numericextensions
+package util.extensions
 
 /**
  * Returns `true` if this value is a multiple of another value

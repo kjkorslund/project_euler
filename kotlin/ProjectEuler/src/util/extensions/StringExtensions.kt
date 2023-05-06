@@ -1,4 +1,4 @@
-package util.stringextensions
+package util.extensions
 
 /**
  * Returns `true` if this value is palindromic (e.g. "racecar")

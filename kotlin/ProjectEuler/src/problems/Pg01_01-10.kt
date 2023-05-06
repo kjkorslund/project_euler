@@ -3,7 +3,7 @@ package problems
 
 import util.Fibonacci
 import util.Primes
-import util.numericextensions.*
+import util.extensions.*
 import kotlin.math.absoluteValue
 import kotlin.math.max
 

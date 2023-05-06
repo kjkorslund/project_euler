@@ -1,6 +1,6 @@
 package util
 
-import util.numericextensions.isMultipleOf
+import util.extensions.isMultipleOf
 
 object Primes {
     // TODO for future improvement:

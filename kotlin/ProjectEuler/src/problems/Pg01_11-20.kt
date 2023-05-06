@@ -1,7 +1,7 @@
 @file:Suppress("unused")
 package problems
 
-import util.numericextensions.*
+import util.extensions.*
 import java.lang.IllegalStateException
 import java.math.BigInteger
 import java.time.DayOfWeek
