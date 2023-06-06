@@ -73,7 +73,7 @@ object P23: Problem<Long> {
             .toList()
 //            .also(::println)
 
-        val abundantSums = sequence<Long> {
+        val abundantSums = sequence {
             for(i in abundantNumbers.indices) {
                 for (j in i until abundantNumbers.size) {
                     val sum = abundantNumbers[i] + abundantNumbers[j]
@@ -88,7 +88,7 @@ object P23: Problem<Long> {
         return (1..limit)
             .filter { !abundantSums.contains(it) }
 //            .also {println(it.size)}
-            .sum();
+            .sum()
     }
 
     private fun Long.isPerfect() = (this.findProperDivisors().sum() == this)
@@ -140,7 +140,7 @@ object P26: Problem<Int> {
             .maxByOrNull { it.second }!!.first
     }
 
-    private fun fractionalDigits(numerator: Int, denominator: Int) = sequence<Int> {
+    private fun fractionalDigits(numerator: Int, denominator: Int) = sequence {
         var n = numerator%denominator
         while(n > 0) {
             yield((n * 10) / denominator)
@@ -148,7 +148,7 @@ object P26: Problem<Int> {
         }
     }
 
-    private fun fractionalDigitNumerators(numerator: Int, denominator: Int) = sequence<Int> {
+    private fun fractionalDigitNumerators(numerator: Int, denominator: Int) = sequence {
         var n = numerator%denominator
         while(n > 0) {
             yield(n)
@@ -156,6 +156,7 @@ object P26: Problem<Int> {
         }
     }
 
+    @Suppress("SameParameterValue")
     private fun repeatingFractionalDigits(numerator: Int, denominator: Int): List<Int> {
         val encounteredNumerators = mutableSetOf<Int>()
         val result = mutableListOf<Int>()
@@ -165,7 +166,6 @@ object P26: Problem<Int> {
             } else {
                 return result.subList(result.lastIndexOf(n), result.size)
                     .map { (it * 10) / denominator }
-                break
             }
         }
         return emptyList()
@@ -187,11 +187,11 @@ object P27: Problem<Int> {
     }
 
     private fun quadraticSequence(a: Int, b: Int): Sequence<Long> = sequence {
-        var n: Int = 0;
-        var result = quadraticFun(n, a, b);
+        var n = 0
+        var result = quadraticFun(n, a, b)
         while(Primes.isPrime(result)) {
-            yield(result);
-            result = quadraticFun(++n, a, b);
+            yield(result)
+            result = quadraticFun(++n, a, b)
         }
     }
 
@@ -215,7 +215,7 @@ object P27: Problem<Int> {
  */
 object P28: Problem<Int> {
     override fun calculate(): Int {
-        val sideLength = 1001;
+        val sideLength = 1001
         return spiralDiagonals()
             .takeWhile { it <= sideLength*sideLength }
             .sum()
@@ -226,9 +226,9 @@ object P28: Problem<Int> {
         // are yielded.  The corners of first shell have an increment of 2, and each subsequent shell has an increment 2
         // more than the previous layer (e.g. 4 for the second layer, 6 for the 3rd layer, etc.)
 
-        var n = 1;
-        var increment = 2;
-        yield(n);
+        var n = 1
+        var increment = 2
+        yield(n)
 
         while(true) {
             repeat(4) {
@@ -282,24 +282,24 @@ object P29: Problem<Int> {
  * powers of their digits.
  */
 object P30: Problem<Long> {
-    private val exponent = 5;
-    private val precomputedPowers = (0..9).associateWith { it.pow(exponent) }
+    private const val EXPONENT = 5
+    private val precomputedPowers = (0..9).associateWith { it.pow(EXPONENT) }
 
     override fun calculate(): Long {
-        val searchRange = 2.. findMaxPossibleNumber(exponent)
+        val searchRange = 2.. findMaxPossibleNumber()
         return searchRange
             .filter { it == powerSum(it) }
             .sum()
     }
 
     /**
-     * Finds the maximum possible numberthat could possibly be equal to its power sum.  The logic behind
+     * Finds the maximum possible number that could possibly be equal to its power sum.  The logic behind
      * this is tricky, but basically the idea is that for a given number of digits, there is a maximum possible power
      * sum, e.g. for exponent of 2 and 3 digits, the max power sum is 9^2*3 = 243.  If the max power sum is less than
      * the maximum possible value for that number of digits (e.g. 243 < 999), then we know that the power sum can no
      * longer 'keep up' with the digit count.
      */
-    fun findMaxPossibleNumber(exponent: Int): Long {
+    private fun findMaxPossibleNumber(): Long {
         val precomputedPower9 = precomputedPowers[9]!!
 
         fun isPowerSumPossible(digitCount: Int): Boolean {
@@ -315,6 +315,6 @@ object P30: Problem<Long> {
             .let { (10).pow(it) - 1 }
     }
 
-    fun powerSum(number: Long): Long = number.digits().sumOf { precomputedPowers[it]!! }
+    private fun powerSum(number: Long): Long = number.digits().sumOf { precomputedPowers[it]!! }
 
 }
