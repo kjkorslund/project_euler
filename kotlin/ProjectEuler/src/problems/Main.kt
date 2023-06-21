@@ -11,13 +11,13 @@ interface Problem<T> {
     }
 
     fun <R> readResource(resource: String, block: (InputStreamReader) -> R): R =
-        Problem::class.java.getResourceAsStream(resource).reader().use(block)
+        Problem::class.java.getResourceAsStream(resource)!!.reader().use(block)
 }
 
 fun main() {
-    val problems = listOf(P32)
+    val problems = listOf(P33)
     for (problem in problems) {
-        var answer: Any? = null
+        var answer: Any?
         val time = measureTimeMillis {
             answer = problem.calculate()
         }

@@ -49,7 +49,7 @@ fun Long.findPrimeFactors(): List<Long> {
         results.add(nextFactor)
         next /= nextFactor
     }
-    return results;
+    return results
 }
 
 /**
@@ -93,6 +93,18 @@ fun Long.digits(): Sequence<Int> = sequence {
         yield((remainder % 10).toInt())
         remainder /= 10
     }
+}
+
+/**
+ * Composes a Long from a sequence of base-10 digits, from largest to smallest place
+ * (note that the order is reversed as compared to method Long.digits() )
+ */
+fun Long.Companion.fromDigits(digits: Iterable<Int>): Long {
+    var result = 0L
+    for (digit in digits) {
+        result = result*10 + digit
+    }
+    return result
 }
 
 fun Long.pow(exponent: Int): Long {

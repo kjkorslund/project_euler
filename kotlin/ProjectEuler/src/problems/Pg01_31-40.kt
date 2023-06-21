@@ -1,8 +1,10 @@
 @file:Suppress("unused")
 package problems
 
+import util.LongFraction
 import util.extensions.contains
 import util.extensions.digits
+import util.extensions.fromDigits
 import util.extensions.size
 
 /**
@@ -94,5 +96,58 @@ object P32 : Problem<Int> {
 //        println("${allDigits}")
 
         return allDigits.size == range.size() && allDigits.containsAll(range.toList())
+    }
+}
+
+/**
+ * The fraction 49/98 is a curious fraction, as an inexperienced
+ * mathematician in attempting to simplify it may incorrectly believe that
+ * 49/98 = 4/8, which is correct, is obtained by cancelling the 9s.
+ *
+ * We shall consider fractions like, 30/50 = 3/5, to be trivial examples.
+ *
+ * There are exactly four non-trivial examples of this type of fraction,
+ * less than one in value, and containing two digits in the numerator and
+ * denominator.
+ *
+ * If the product of these four fractions is given in its lowest common
+ * terms, find the value of the denominator.
+ */
+object P33 : Problem<Int> {
+    override fun calculate(): Int {
+        var product = LongFraction(1,1)
+        for (d in 12 until 100) {
+            for (n in 11 until d) {
+                val fraction = LongFraction(n.toLong(), d.toLong())
+                if (isCuriousFraction(fraction)) {
+                    println("$fraction (${fraction.reduce()})")
+                    product *= fraction
+                }
+            }
+        }
+        return product.denominator.toInt()
+    }
+
+    private fun isCuriousFraction(fraction: LongFraction): Boolean {
+        val nDigits = fraction.numerator.digits().toList().reversed()
+        val dDigits = fraction.denominator.digits().toList().reversed()
+
+        val nonTrivialIndexPairs = mutableListOf<Pair<Int, Int>>()
+        for (nIndex in nDigits.indices) {
+            for (dIndex in dDigits.indices) {
+                if (nDigits[nIndex] == dDigits[dIndex] && nDigits[nIndex] != 0) {
+                    nonTrivialIndexPairs.add(Pair(nIndex, dIndex))
+                }
+            }
+        }
+
+        for (indexPair in nonTrivialIndexPairs) {
+            val modifiedFraction = LongFraction(
+                Long.fromDigits(nDigits.filterIndexed { index, _ -> index != indexPair.first }),
+                Long.fromDigits(dDigits.filterIndexed { index, _ -> index != indexPair.second })
+            )
+            if (fraction.equivalentTo(modifiedFraction)) return true
+        }
+        return false
     }
 }
