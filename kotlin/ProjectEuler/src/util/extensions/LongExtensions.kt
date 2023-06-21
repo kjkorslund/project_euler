@@ -114,3 +114,9 @@ fun Long.pow(exponent: Int): Long {
     }
     return result
 }
+
+fun Long.factorial(): Long? = when {
+    this < 0L -> null
+    this in (0L..1L) -> 1L
+    else -> this * (this-1).factorial()!!
+}

@@ -2,10 +2,7 @@
 package problems
 
 import util.LongFraction
-import util.extensions.contains
-import util.extensions.digits
-import util.extensions.fromDigits
-import util.extensions.size
+import util.extensions.*
 
 /**
  * In the United Kingdom the currency is made up of pound (£) and pence (p). There are eight coins in general
@@ -150,4 +147,33 @@ object P33 : Problem<Int> {
         }
         return false
     }
+}
+
+/**
+ * 145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+ *
+ * Find the sum of all numbers which are equal to the sum of the factorial
+ * of their digits.
+ *
+ * Note: as 1! = 1 and 2! = 2 are not sums they are not included.
+ */
+object P34 : Problem<Long> {
+    override fun calculate(): Long {
+        // Note on upper bound: 9! = 362880, and the upper bound occurs where 9! * nDigits is less than the largest
+        // possible number with nDigits.  By my calculations, this occurs for nDigits = 8 (2,903,040 < 10,000,000), i.e.
+        // the maximum possible sum of factorials from an 8-digit number is only a 7-digit number, therefore no 8-digit
+        // numbers can be a match.
+        var sumOfSums = 0L
+        for (l in 3L until 10_000_000L) {
+            val sum = l.digits()
+                .map { it.toLong().factorial()!! }
+                .sum()
+            if (l == sum) {
+                println(l)
+                sumOfSums += sum
+            }
+        }
+        return sumOfSums
+    }
+
 }
