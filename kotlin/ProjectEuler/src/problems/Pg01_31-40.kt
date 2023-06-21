@@ -177,3 +177,45 @@ object P34 : Problem<Long> {
     }
 
 }
+
+/**
+ * The number, 197, is called a circular prime because all rotations of the
+ * digits: 197, 971, and 719, are themselves prime.
+ *
+ * There are thirteen such primes below 100: 2, 3, 5, 7, 11, 13, 17, 31, 37,
+ * 71, 73, 79, and 97.
+ *
+ * How many circular primes are there below one million?
+ */
+object P35 : Problem<Int> {
+    override fun calculate(): Int {
+        val matches = mutableSetOf<Int>()
+        for (i in 1 until 1_000_000) {
+            if (matches.contains(i)) continue
+            if (!i.isPrime()) continue
+
+            val rotations = digitRotations(i).toList()
+            if (rotations.all { it.isPrime() }) {
+//                println(rotations)
+                matches.addAll(rotations)
+            }
+        }
+        println(matches.toList().sorted())
+        return matches.size
+    }
+
+    private fun digitRotations(i: Int): Sequence<Int> = sequence {
+        yield(i)
+        val digits = i.digits().toList().reversed()
+        var rotatedDigits = digits.rotateLeft()
+        while (rotatedDigits != digits) {
+            yield (Int.fromDigits(rotatedDigits))
+            rotatedDigits = rotatedDigits.rotateLeft()
+        }
+    }
+
+    fun <T> List<T>.rotateLeft(): List<T> {
+        return this.drop(1) + this.first()
+    }
+
+}
