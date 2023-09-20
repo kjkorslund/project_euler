@@ -2,6 +2,7 @@
 package problems
 
 import util.LongFraction
+import util.Primes
 import util.extensions.*
 
 /**
@@ -217,5 +218,96 @@ object P35 : Problem<Int> {
     fun <T> List<T>.rotateLeft(): List<T> {
         return this.drop(1) + this.first()
     }
+}
 
+/*
+ * The decimal number, 585 = 1001001001b (binary), is palindromic in both
+ * bases.
+ *
+ * Find the sum of all numbers, less than one million, which are palindromic
+ * in base 10 and base 2.
+ *
+ * (Please note that the palindromic number, in either base, may not include
+ * leading zeros.)
+ */
+object P36 : Problem<Int> {
+    override fun calculate(): Int {
+       return (1 until 1_000_000)
+            .filter(this::isPalindromicInBoth)
+            .sum()
+    }
+
+    private fun isPalindromicInBoth(n: Int): Boolean {
+        val decimalStr = n.toString()
+        val binaryStr = n.toString(2)
+        return decimalStr.isPalindrome() && binaryStr.isPalindrome()
+    }
+}
+
+/*
+ * The number 3797 has an interesting property. Being prime itself, it is
+ * possible to continuously remove digits from left to right, and remain
+ * prime at each stage: 3797, 797, 97, and 7. Similarly we can work from
+ * right to left: 3797, 379, 37, and 3.
+ *
+ * Find the sum of the only eleven primes that are both truncatable from
+ * left to right and right to left.
+ *
+ * NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+ */
+object P37 : Problem<Long> {
+    override fun calculate(): Long {
+        // Bit of a cheat: the problem states there are 11 results so the search proceeds only until 11 are found
+        // It should be possible to write an algorithm that doesn't need to know the number of results, but I'm not
+        // exactly sure how to define the constraints.  Truncatable primes must start and end with a prime digit (1, 3,
+        // 5, 7), but the digits in-between are allowed to be non-prime.  It's unclear how to know for sure that
+//        return Primes.sequence().dropWhile { it < 10 }
+//            .filter(this::isTruncatablePrime).take(11)
+//            .onEach { println("$it") }
+//            .sum()
+
+        // This code is experimental/WIP, trying to find a way to identify candidates via expansion in order to avoid
+        // the constraint problem
+        val results: MutableSet<Long> = mutableSetOf()
+        val candidates: MutableList<Long> = mutableListOf(2, 3, 5, 7)
+        val candidateDigits: List<Int> = listOf(1,3,7,9) // Other digits are guaranteed non-primes
+        while (candidates.isNotEmpty()) {
+            val candidate = candidates.removeFirst()
+//            println("Search: $candidate (Remaining: $candidates)")
+            candidateDigits.map { expandRight(candidate, it) }
+                .filter { it.isPrime() }
+//                .filter { it.isPrime() && leftTruncates(it).all(Long::isPrime) }
+                .forEach {
+                    candidates.add(it)
+                    if (isTruncatablePrime(it)) {
+                        results.add(it)
+                        println("Found: $it")
+                    }
+                }
+        }
+
+        return results.sum();
+    }
+
+    private fun expandRight(num: Long, digit: Int): Long {
+        return Long.fromDigits(num.digits().toList().reversed() + digit)
+    }
+
+    private fun leftTruncates(num: Long): Sequence<Long> {
+        fun truncateLeft(n: Long): Long? = if (n >= 10) {
+            n.digits().toList().reversed().drop(1).let { Long.fromDigits(it) }
+        } else null
+
+        return generateSequence(truncateLeft(num), ::truncateLeft)
+    }
+
+    private fun isTruncatablePrime(num: Long): Boolean {
+        fun truncateLeft(n: Long): Long = n.digits().toList().reversed().drop(1).let { Long.fromDigits(it) }
+        fun truncateRight(n: Long): Long = n.digits().toList().drop(1).reversed().let { Long.fromDigits(it) }
+
+        val leftTruncates = generateSequence(num) { if (it >= 10) truncateLeft(it) else null }
+        val rightTruncates = generateSequence(num) { if (it >= 10) truncateRight(it) else null }
+
+        return leftTruncates.all { it.isPrime() } && rightTruncates.all { it.isPrime() }
+    }
 }

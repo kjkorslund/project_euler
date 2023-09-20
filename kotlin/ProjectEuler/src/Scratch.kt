@@ -1,8 +1,9 @@
-import util.extensions.cartesianProduct
-import util.extensions.digits
-import util.extensions.pow
+import problems.P35
+import problems.P35.rotateLeft
+import util.Primes
+import util.extensions.factorial
+import util.extensions.isPrime
 
 fun main() {
-    (0..10).forEach {println("$it: ${(2L).pow(it)}") }
-//    println("${l.pow(3)}")
+    println((1..100).filter { it.isPrime() }.toList())
 }
