@@ -4,6 +4,7 @@ package problems
 import util.LongFraction
 import util.Primes
 import util.extensions.*
+import kotlin.math.max
 
 /**
  * In the United Kingdom the currency is made up of pound (£) and pence (p). There are eight coins in general
@@ -220,7 +221,7 @@ object P35 : Problem<Int> {
     }
 }
 
-/*
+/**
  * The decimal number, 585 = 1001001001b (binary), is palindromic in both
  * bases.
  *
@@ -244,7 +245,7 @@ object P36 : Problem<Int> {
     }
 }
 
-/*
+/**
  * The number 3797 has an interesting property. Being prime itself, it is
  * possible to continuously remove digits from left to right, and remain
  * prime at each stage: 3797, 797, 97, and 7. Similarly we can work from
@@ -257,17 +258,16 @@ object P36 : Problem<Int> {
  */
 object P37 : Problem<Long> {
     override fun calculate(): Long {
-        // Bit of a cheat: the problem states there are 11 results so the search proceeds only until 11 are found
-        // It should be possible to write an algorithm that doesn't need to know the number of results, but I'm not
-        // exactly sure how to define the constraints.  Truncatable primes must start and end with a prime digit (1, 3,
-        // 5, 7), but the digits in-between are allowed to be non-prime.  It's unclear how to know for sure that
-//        return Primes.sequence().dropWhile { it < 10 }
+        // Old approach:  iterate through all primes and check if each is truncatable or not.  Stop after 11 have been
+        // found.  This is a bit of a cheat, because it makes use of the knowledge that there are only 11 results.
 //            .filter(this::isTruncatablePrime).take(11)
 //            .onEach { println("$it") }
 //            .sum()
 
-        // This code is experimental/WIP, trying to find a way to identify candidates via expansion in order to avoid
-        // the constraint problem
+        // New approach: start with the single-digit primes and 'expand' to the right by appending only the digits that
+        // are possible in the ones place in primes (1, 3, 7, 9).  Keep only the primes, then check if each prime is
+        // truncatable or not.  Repeat for each candidate until the list of candidates runs out (right-expansion of the
+        // existing candidates eventually will produce no new primes)
         val results: MutableSet<Long> = mutableSetOf()
         val candidates: MutableList<Long> = mutableListOf(2, 3, 5, 7)
         val candidateDigits: List<Int> = listOf(1,3,7,9) // Other digits are guaranteed non-primes
@@ -276,12 +276,11 @@ object P37 : Problem<Long> {
 //            println("Search: $candidate (Remaining: $candidates)")
             candidateDigits.map { expandRight(candidate, it) }
                 .filter { it.isPrime() }
-//                .filter { it.isPrime() && leftTruncates(it).all(Long::isPrime) }
                 .forEach {
                     candidates.add(it)
                     if (isTruncatablePrime(it)) {
                         results.add(it)
-                        println("Found: $it")
+//                        println("Found: $it")
                     }
                 }
         }
@@ -293,14 +292,6 @@ object P37 : Problem<Long> {
         return Long.fromDigits(num.digits().toList().reversed() + digit)
     }
 
-    private fun leftTruncates(num: Long): Sequence<Long> {
-        fun truncateLeft(n: Long): Long? = if (n >= 10) {
-            n.digits().toList().reversed().drop(1).let { Long.fromDigits(it) }
-        } else null
-
-        return generateSequence(truncateLeft(num), ::truncateLeft)
-    }
-
     private fun isTruncatablePrime(num: Long): Boolean {
         fun truncateLeft(n: Long): Long = n.digits().toList().reversed().drop(1).let { Long.fromDigits(it) }
         fun truncateRight(n: Long): Long = n.digits().toList().drop(1).reversed().let { Long.fromDigits(it) }
@@ -310,4 +301,85 @@ object P37 : Problem<Long> {
 
         return leftTruncates.all { it.isPrime() } && rightTruncates.all { it.isPrime() }
     }
+}
+
+/**
+ * Take the number 192 and multiply it by each of 1, 2, and 3:
+ *
+ *    192 × 1 = 192
+ *    192 × 2 = 384
+ *    192 × 3 = 576
+ *
+ * By concatenating each product we get the 1 to 9 pandigital, 192384576. We
+ * will call 192384576 the concatenated product of 192 and (1,2,3)
+ *
+ * The same can be achieved by starting with 9 and multiplying by 1, 2, 3,
+ * 4, and 5, giving the pandigital, 918273645, which is the concatenated
+ * product of 9 and (1,2,3,4,5).
+ *
+ * What is the largest 1 to 9 pandigital 9-digit number that can be formed
+ * as the concatenated product of an integer with (1,2, ... , n) where n >
+ * 1?
+ */
+object P38 : Problem<Int> {
+    override fun calculate(): Int {
+        var maxProduct = 0
+
+        // 10000 is an upper bound because the concatenated product must contain at least two products, and the
+        // concatenated product of at least two 5-digit numbers must be at least 10 digits
+        for(base in 1..10000) {
+            // 9 is the upper bound for n because each concatenation must be at least 1 digit
+            for (n in 1..9) {
+                val digits = concatenateProducts(base, n);
+                if (isPandigital(digits)) {
+                    maxProduct = max(maxProduct, digits.toInt())
+                }
+            }
+        }
+        return maxProduct
+    }
+
+    private fun concatenateProducts(base: Int, n: Int): String {
+        val result = StringBuilder()
+        for (i in 1..n) {
+            result.append(base * i);
+        }
+        return result.toString()
+    }
+
+    private fun isPandigital(digits: String): Boolean {
+        return digits.length == 9 && digits.toList().containsAll("123456789".toList())
+    }
+}
+
+/**
+ * If p is the perimeter of a right angle triangle with integral length
+ * sides, {a,b,c}, there are exactly three solutions for p = 120.
+ *
+ * {20,48,52}, {24,45,51}, {30,40,50}
+ *
+ * For which value of p <= 1000, is the number of solutions maximised?
+ */
+object P39 : Problem<Int> {
+    override fun calculate(): Int {
+        return (1..1000)
+//            .onEach { println("$it: ${countRightTriangles(it)}") }
+            .maxByOrNull { countRightTriangles(it) }!!
+    }
+
+    private fun countRightTriangles(perimeter: Int): Int {
+        fun isRightTriangle(a: Int, b: Int, c: Int) = a*a + b*b == c*c;
+
+        var count: Int = 0
+        for (a in 1..(perimeter / 3)) {
+            for (b in a..(perimeter - a)) {
+                val c = perimeter - (a + b);
+                if (isRightTriangle(a, b, c)) {
+                    count += 1
+                }
+            }
+        }
+        return count
+    }
+
 }

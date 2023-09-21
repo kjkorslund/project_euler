@@ -34,20 +34,6 @@ object Primes {
             extendUntil { it >= candidate }
             return knownPrimesSet.contains(candidate)
         }
-
-//        if (candidate > 1L) {
-//            extendUntil { it >= candidate }
-//            if (knownPrimesSet.contains(candidate)) return true
-//            else if (isPrimeInternal(candidate)) {
-//                knownPrimesSet.add(candidate)
-//                return true
-//            }
-//            return knownPrimesSet.contains(candidate);
-//        }
-//        return false
-
-//        extendUntil { it >= candidate }
-//        return knownPrimesSet.contains(candidate);
     }
 
     fun sequence(): Sequence<Long> = sequence {
