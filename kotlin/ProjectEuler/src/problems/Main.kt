@@ -1,6 +1,6 @@
 package problems
 
-import problems.pg01.P39
+import problems.pg01.*
 import java.io.InputStreamReader
 import kotlin.system.measureTimeMillis
 
@@ -16,7 +16,7 @@ interface Problem<T> {
 }
 
 fun main() {
-    val problems = listOf(P39)
+    val problems = listOf(P41)
     for (problem in problems) {
         var answer: Any?
         val time = measureTimeMillis {

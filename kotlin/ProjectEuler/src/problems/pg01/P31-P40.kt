@@ -398,6 +398,19 @@ object P39 : Problem<Int> {
  */
 object P40 : Problem<Int> {
     override fun calculate(): Int {
-        TODO("Not yet implemented")
+        val indices = listOf(1, 10, 100, 1000, 10000, 100000, 1000000)
+            .map { it - 1 }  // Subtract 1 from indices to make them zero-based
+        return digitSequence().take(indices.last() + 1)
+            .filterIndexed { index, digit -> index in indices }
+            .onEach { println(it) }
+            .reduce(Int::times)
+    }
+
+    private fun digitSequence(): Sequence<Int> = sequence {
+        var i: Int = 1
+        while(true) {
+            (i++).digits().toList().asReversed()
+                .forEach { yield(it) }
+        }
     }
 }
