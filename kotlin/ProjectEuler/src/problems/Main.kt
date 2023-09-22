@@ -1,5 +1,6 @@
 package problems
 
+import problems.pg01.P39
 import java.io.InputStreamReader
 import kotlin.system.measureTimeMillis
 

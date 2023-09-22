@@ -1,6 +1,7 @@
 @file:Suppress("unused")
-package problems
+package problems.pg02
 
+import problems.Problem
 import kotlin.math.max
 
 /**

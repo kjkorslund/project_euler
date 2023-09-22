@@ -1,6 +1,7 @@
 @file:Suppress("unused")
-package problems
+package problems.pg01
 
+import problems.Problem
 import util.Fibonacci
 import util.Primes
 import util.extensions.*

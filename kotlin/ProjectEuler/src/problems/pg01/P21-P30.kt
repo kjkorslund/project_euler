@@ -1,6 +1,7 @@
 @file:Suppress("unused")
-package problems
+package problems.pg01
 
+import problems.Problem
 import util.Fibonacci
 import util.Primes
 import util.extensions.cartesianProduct
@@ -50,7 +51,7 @@ object P22: Problem<Long> {
         return names.sorted().asSequence()
 //            .also(::println)
 //            .also {println(it.indexOfFirst { it == "COLIN" }.inc())}
-            .mapIndexed {index, it -> index.inc() * nameScore(it)}
+            .mapIndexed {index, it -> index.inc() * nameScore(it) }
             .sum()
     }
 

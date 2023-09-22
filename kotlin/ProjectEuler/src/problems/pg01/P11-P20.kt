@@ -1,6 +1,7 @@
 @file:Suppress("unused")
-package problems
+package problems.pg01
 
+import problems.Problem
 import util.extensions.*
 import java.lang.IllegalStateException
 import java.math.BigInteger
@@ -210,7 +211,7 @@ object P13: Problem<Long> {
     )
 
     override fun calculate(): Long {
-        val sum = numbers.map { it.toBigInteger() }.reduce {acc, it -> acc.add(it) }
+        val sum = numbers.map { it.toBigInteger() }.reduce { acc, it -> acc.add(it) }
         return sum.toString().take(10).toLong()
     }
 }
@@ -374,7 +375,7 @@ object P18: Problem<Long> {
     override fun calculate(): Long {
 //        fun Long.toStringPadded(len: Int) = this.toString().padStart(len, ' ')
 
-        return triangle.reduceRight {secondToLast, last ->
+        return triangle.reduceRight { secondToLast, last ->
 //            println(last.joinToString(" ", transform = { it.toStringPadded(4)}));
 //            println(secondToLast.joinToString(" ", transform = { it.toStringPadded(4)}));
 

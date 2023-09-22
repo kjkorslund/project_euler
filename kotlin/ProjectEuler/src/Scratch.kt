@@ -1,7 +1,3 @@
-import problems.P35
-import problems.P35.rotateLeft
-import util.Primes
-import util.extensions.factorial
 import util.extensions.isPrime
 
 fun main() {
