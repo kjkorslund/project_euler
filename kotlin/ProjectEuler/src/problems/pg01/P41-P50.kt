@@ -1,6 +1,7 @@
 package problems.pg01
 
 import problems.Problem
+import util.extensions.isPermutationOf
 import util.extensions.isPrime
 
 /**
@@ -35,8 +36,8 @@ object P41 : Problem<Long> {
     private fun isAnyPandigital(num: Long): Boolean {
         val digits = num.toString()
         if (digits.length > 9) return false
-        val requiredDigits = "123456789".toList().slice(0 until digits.length)
-        return digits.toList().containsAll(requiredDigits)
+        val requiredDigits = "123456789".slice(digits.indices)
+        return digits.isPermutationOf(requiredDigits)
     }
 
     private fun pandigitalRange(maxDigit: Int): LongRange {

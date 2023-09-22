@@ -216,7 +216,7 @@ object P35 : Problem<Int> {
         }
     }
 
-    fun <T> List<T>.rotateLeft(): List<T> {
+    private fun <T> List<T>.rotateLeft(): List<T> {
         return this.drop(1) + this.first()
     }
 }
@@ -285,7 +285,7 @@ object P37 : Problem<Long> {
                 }
         }
 
-        return results.sum();
+        return results.sum()
     }
 
     private fun expandRight(num: Long, digit: Int): Long {
@@ -330,7 +330,7 @@ object P38 : Problem<Int> {
         for(base in 1..10000) {
             // 9 is the upper bound for n because each concatenation must be at least 1 digit
             for (n in 1..9) {
-                val digits = concatenateProducts(base, n);
+                val digits = concatenateProducts(base, n)
                 if (isPandigital(digits)) {
                     maxProduct = max(maxProduct, digits.toInt())
                 }
@@ -342,7 +342,7 @@ object P38 : Problem<Int> {
     private fun concatenateProducts(base: Int, n: Int): String {
         val result = StringBuilder()
         for (i in 1..n) {
-            result.append(base * i);
+            result.append(base * i)
         }
         return result.toString()
     }
@@ -368,12 +368,12 @@ object P39 : Problem<Int> {
     }
 
     private fun countRightTriangles(perimeter: Int): Int {
-        fun isRightTriangle(a: Int, b: Int, c: Int) = a*a + b*b == c*c;
+        fun isRightTriangle(a: Int, b: Int, c: Int) = a*a + b*b == c*c
 
-        var count: Int = 0
+        var count = 0
         for (a in 1..(perimeter / 3)) {
             for (b in a..(perimeter - a)) {
-                val c = perimeter - (a + b);
+                val c = perimeter - (a + b)
                 if (isRightTriangle(a, b, c)) {
                     count += 1
                 }
@@ -401,13 +401,13 @@ object P40 : Problem<Int> {
         val indices = listOf(1, 10, 100, 1000, 10000, 100000, 1000000)
             .map { it - 1 }  // Subtract 1 from indices to make them zero-based
         return digitSequence().take(indices.last() + 1)
-            .filterIndexed { index, digit -> index in indices }
+            .filterIndexed { index, _ -> index in indices }
             .onEach { println(it) }
             .reduce(Int::times)
     }
 
     private fun digitSequence(): Sequence<Int> = sequence {
-        var i: Int = 1
+        var i = 1
         while(true) {
             (i++).digits().toList().asReversed()
                 .forEach { yield(it) }
