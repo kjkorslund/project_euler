@@ -395,7 +395,7 @@ object P18: Problem<Long> {
  */
 object P19: Problem<Int> {
     override fun calculate(): Int {
-        return sequence<LocalDate> {
+        return sequence {
             for (year in 1901..2000) {
                 for (month in 1..12) {
                     LocalDate.of(year, month, 1)

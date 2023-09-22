@@ -9,8 +9,8 @@ import kotlin.math.max
  */
 object P64 : Problem<Int> {
     override fun calculate(): Int {
-        // TODO: figure out how to solve the subproblem
-        return -2;
+        // TODO: figure out how to solve the sub-problem
+        return -2
     }
 }
 

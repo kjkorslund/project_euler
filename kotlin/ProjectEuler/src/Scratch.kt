@@ -1,5 +1,4 @@
 import util.extensions.isPermutationOf
-import util.extensions.isPrime
 
 fun main() {
     val inputs: List<Pair<String, String>> = listOf(

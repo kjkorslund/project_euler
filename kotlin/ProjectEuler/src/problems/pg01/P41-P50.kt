@@ -44,7 +44,7 @@ object P41 : Problem<Long> {
         var start = maxDigit.toLong()
         var end = maxDigit.toLong()
         for (i in 1 until maxDigit) {
-            start = start*10
+            start *= 10
             end = end*10 + (maxDigit-i)
         }
         return start..end

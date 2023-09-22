@@ -6,12 +6,11 @@ package util.extensions
 fun String.isPalindrome(): Boolean {
     val median = (this.length - 1) / 2
 //    println("Median of '$this': $median")
-    return (0..median).asSequence()
-            .all {
-                val pair = (this.length - 1) - it
-//                println("Checking $it-$pair pair: ${this[it]} == ${this[pair]}")
-                this[it] == this[pair]
-            }
+    return (0..median).all {
+            val pair = (this.length - 1) - it
+//            println("Checking $it-$pair pair: ${this[it]} == ${this[pair]}")
+            this[it] == this[pair]
+        }
 }
 
 /**
@@ -33,7 +32,7 @@ fun String.lexicographicPermutations(): Sequence<String> {
     }
 
     return when(this.length) {
-        0 -> emptySequence<String>()
+        0 -> emptySequence()
         1 -> sequenceOf(this)
         else -> _lexicographicPermutations(this.toCharArray().also { it.sort() }.concatToString())
     }
@@ -46,5 +45,5 @@ fun String.lexicographicPermutations(): Sequence<String> {
 fun String.isPermutationOf(other: String): Boolean {
     val sortedChars = this.toCharArray().also(CharArray::sort)
     val otherSortedChars = other.toCharArray().also(CharArray::sort)
-    return sortedChars.contentEquals(otherSortedChars);
+    return sortedChars.contentEquals(otherSortedChars)
 }

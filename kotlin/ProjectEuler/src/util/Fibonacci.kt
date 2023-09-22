@@ -16,7 +16,7 @@ object Fibonacci {
         }
     }
 
-    fun longSequence() = sequence<Long> {
+    fun longSequence() = sequence {
         yield(1L)
         yield(1L)
         var last = 1L
@@ -29,7 +29,7 @@ object Fibonacci {
         }
     }
 
-    fun intSequence() = sequence<Int> {
+    fun intSequence() = sequence {
         yield(1)
         yield(1)
         var last = 1
