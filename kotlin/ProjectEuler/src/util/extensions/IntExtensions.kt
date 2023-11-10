@@ -47,3 +47,8 @@ fun Int.pow(exponent: Int): Long {
     }
     return result
 }
+
+fun Int.isTriangleNum(): Boolean {
+    val triangleSequence = generateSequence(1, Int::inc).map { (it * (it+1)) / 2 }
+    return triangleSequence.takeWhile { it <= this }.contains(this)
+}

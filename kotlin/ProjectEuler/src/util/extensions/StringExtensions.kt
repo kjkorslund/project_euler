@@ -43,6 +43,8 @@ fun String.lexicographicPermutations(): Sequence<String> {
  * in a different order (e.g. "baba" and "abba").  Case-sensitive.
  */
 fun String.isPermutationOf(other: String): Boolean {
+    if (this.length != other.length) return false
+
     val sortedChars = this.toCharArray().also(CharArray::sort)
     val otherSortedChars = other.toCharArray().also(CharArray::sort)
     return sortedChars.contentEquals(otherSortedChars)
