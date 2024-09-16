@@ -4,6 +4,7 @@ package problems.pg01
 
 import problems.Problem
 import util.Geometrics
+import util.Primes
 import util.extensions.*
 
 
@@ -233,6 +234,45 @@ object P45 : Problem<Long> {
         return matches.take(3)
             .onEach { println("Match: $it") }
             .last()
+    }
+}
+
+/**
+ * It was proposed by Christian Goldbach that every odd composite number can
+ * be written as the sum of a prime and twice a square.
+ *   9 = 7 + 2×1^2
+ *   15 = 7 + 2×2^2
+ *   21 = 3 + 2×3^2
+ *   25 = 7 + 2×3^2
+ *   27 = 19 + 2×2^2
+ *   33 = 31 + 2×1^2
+ * It turns out that the conjecture was false.
+ * What is the smallest odd composite that cannot be written as the sum of a
+ * prime and twice a square?
+ */
+object P46 : Problem<Long> {
+    override fun calculate(): Long {
+        // Create a sequence of odd composites (note: 1 is neither prime nor a composite)
+        val oddComposites = generateSequence(3L) { it + 2 }.filter { !it.isPrime() }
+
+        // Find the first odd composite that is NOT a Goldbach match
+        return oddComposites.filter { !isGoldbachMatch(it) }.first()
+    }
+
+    fun isGoldbachMatch(n: Long): Boolean {
+        val smallerPrimes = Primes.sequence().takeWhile { it < n }
+        for (p in smallerPrimes) {
+            val squares = Geometrics.wholes().map { it*it }
+            val candidates = squares.map { p + 2*it }.takeWhile { it <= n }
+            if (candidates.last() == n) return true
+        }
+        return false
+    }
+}
+
+object P47 : Problem<Long> {
+    override fun calculate(): Long {
+        TODO("Not yet implemented")
     }
 
 }
