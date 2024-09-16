@@ -115,6 +115,19 @@ fun Long.pow(exponent: Int): Long {
     return result
 }
 
+/**
+ * Given an exponent, return the non-fractional root of this Long for that exponent, if one exists.
+ * All candidates are searched starting from 1, which is probably not the fastest way to do this.
+ */
+infix fun Long.root(exponent: Int): Long? {
+    var l = 1L;
+    var pow = l.pow(exponent);
+    while(pow < this) {
+        pow = (++l).pow(exponent)
+    }
+    return if (pow == this) l else null
+}
+
 fun Long.factorial(): Long? = when {
     this < 0L -> null
     this in (0L..1L) -> 1L
