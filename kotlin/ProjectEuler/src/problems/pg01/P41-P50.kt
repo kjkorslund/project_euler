@@ -297,5 +297,33 @@ object P47 : Problem<Long> {
         println("First match: $firstMatch")
         return firstMatch.first
     }
+}
 
+/**
+ * The series, 1^1 + 2^2 + 3^3 + ... + 10^10 = 10405071317.
+ * Find the last ten digits of the series, 1^1 + 2^2 + 3^3 + ... + 1000^1000.
+ */
+object P48 : Problem<Long> {
+    override fun calculate(): Long {
+        // The trick with this problem is that we don't need to calculate the full value of each power, only the last 10
+        // digits.  Because of how multiplication works, the last 10 digits of each power will still be correct even if
+        // all higher digits are dropped at each step of the power multiplication.  Finally all of the truncated powers
+        // can be summed and truncated once more to get the final truncated result
+        return Geometrics.wholes().take(1000)
+            .map { it.powTruncated(it.toInt(), 10) }
+            .sum().truncateToLastNDigits(10)
+    }
+
+    // Computes the last N digits of a power
+    private fun Long.powTruncated(exponent: Int, digits: Int): Long {
+        val truncator = 10L.pow(digits)
+        var result = 1L
+        repeat(exponent) {
+            result = (result * this) % truncator
+        }
+        return result
+    }
+
+    // Truncate a number to its last N digits (e.g. 12345 truncated to last 3 = 345)
+    private fun Long.truncateToLastNDigits(n: Int) = this % 10L.pow(n)
 }
