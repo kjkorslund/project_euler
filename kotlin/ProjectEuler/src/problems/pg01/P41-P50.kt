@@ -327,3 +327,58 @@ object P48 : Problem<Long> {
     // Truncate a number to its last N digits (e.g. 12345 truncated to last 3 = 345)
     private fun Long.truncateToLastNDigits(n: Int) = this % 10L.pow(n)
 }
+
+/**
+ * The arithmetic sequence, 1487, 4817, 8147, in which each of the terms
+ * increases by 3330, is unusual in two ways:
+ *   i)  each of the three terms are prime, and
+ *   ii) each of the 4-digit numbers are permutations of one another.
+ *
+ * There are no arithmetic sequences made up of three 1-, 2-, or 3-digit
+ * primes, exhibiting this property, but there is one other 4-digit
+ * increasing sequence.
+ *
+ * What 12-digit number do you form by concatenating the three terms in this
+ * sequence?
+ */
+object P49 : Problem<Long> {
+    override fun calculate(): Long {
+        // This is a bit suboptimal as it repeats the search for each prime within a permutation group, however the
+        // bounds are tight enough that it can be afforded (~1k primes in the 4-digit range, 24 permutations per prime)
+        // There are a number of optimizations that can later be made if this problem ends up reappearing with looser
+        // bounds
+        val fourDigitPrimes = Primes.sequence().dropWhile { it < 1000 }.takeWhile { it < 10000 }
+        return fourDigitPrimes
+            .map { primePermutations(it) }
+            .filter { it.size >= 3 }
+            .mapNotNull { tripleWithCommonIncrement(it) }
+            .toSet()
+            .onEach { println("Match: $it") }
+            .last().let { (it.first.toString() + it.second.toString() + it.third.toString()).toLong() }
+    }
+
+    private fun primePermutations(p: Long): Set<Long> {
+        return p.toString().lexicographicPermutations()
+            .filter { it.first() != '0' } // Permutation must not have any leading zeros
+            .map { it.toLong() }
+            .toSet().asSequence()
+            .filter { it.isPrime() }
+            .toSet()
+    }
+
+    private fun tripleWithCommonIncrement(set: Set<Long>): Triple<Long, Long, Long>? {
+        if (set.size < 3) return null
+        val sorted = set.sorted()
+
+        for (i in sorted.indices) {
+            for (j in i+1 until sorted.size) {
+                val iVal = sorted[i]
+                val jVal = sorted[j]
+                val increment = jVal - iVal
+                val kVal = jVal + increment
+                if (sorted.contains(kVal)) return Triple(iVal, jVal, kVal)
+            }
+        }
+        return null
+    }
+}
