@@ -382,3 +382,48 @@ object P49 : Problem<Long> {
         return null
     }
 }
+
+/**
+ * The prime 41, can be written as the sum of six consecutive primes:
+ *    41 = 2 + 3 + 5 + 7 + 11 + 13
+ *
+ * This is the longest sum of consecutive primes that adds to a prime below
+ * one-hundred.
+ *
+ * The longest sum of consecutive primes below one-thousand that adds to a
+ * prime, contains 21 terms, and is equal to 953.
+ *
+ * Which prime, below one-million, can be written as the sum of the most
+ * consecutive primes?
+ */
+object P50 : Problem<Long> {
+    override fun calculate(): Long {
+        // Note:  there are 78498 primes smaller than 1 million.  So algorithmic complexity does matter, at least a bit.
+        //        On the other hand - it's the *sum* must be smaller than 1 million, not the individual primes, so there
+        //        may be some way to disregard primes larger than a certain threshold because they could not possibly
+        //        add up to a sum less than 1 million
+        // Note:  the terms must be consecutive, but not necessarily starting from 2 (the 21-term sum equal to 953
+        //        starts with 7 and ends with 89)
+        // Note:  the minimum possible sum for an n-term sequence can be calculated by iteratively summing the primes
+        //        starting from 2, disregarding whether the sum is prime or not.  The largest term with a minimum
+        //        possible sum under 1 million is 546, with a minimum possible sum of 997661
+
+        data class Result(val sum: Long, val primes: List<Long>)
+
+        val threshold = 1_000_000L
+        val primes = Primes.sequence().takeWhile { it < threshold }.toList()
+        var best = Result(0L, emptyList())
+        for (i in 0 .. primes.size) {
+            for (j in i+1 .. primes.size) {
+                val candidate = primes.subList(i, j)
+                val sum = candidate.sum()
+                if (sum > threshold) break
+                if (candidate.size > best.primes.size && sum.isPrime()) {
+                    best = Result(sum, candidate)
+                    println("New leader: $best")
+                }
+            }
+        }
+        return best.sum
+    }
+}
