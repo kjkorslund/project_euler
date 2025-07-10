@@ -70,3 +70,27 @@ object P51 : Problem<Long> {
             .filter { it.isPrime() }
             .count()
 }
+
+/*
+ * It can be seen that the number, 125874, and its double, 251748, contain
+ * exactly the same digits, but in a different order.
+ *
+ * Find the smallest positive integer, x, such that 2x, 3x, 4x, 5x, and 6x,
+ * contain the same digits.
+ */
+object P52 : Problem<Long> {
+    override fun calculate(): Long {
+        listOf(125874L, 251748L).let { println("Example: $it have same digits? ${sameDigits(it)}") }
+        return generateSequence(1L) { it + 1L }.first {
+            sameDigits(listOf(it, it*2, it*3, it*4, it*5, it*6))
+        }.also { println(listOf(it, it*2, it*3, it*4, it*5, it*6))}
+    }
+
+    // Returns true if all numbers in 'nums' have the same exact digits
+    private fun sameDigits(nums: Iterable<Long>): Boolean {
+        val firstDigitsSorted = nums.first().digits().toList().sorted()
+        val remaining = nums.drop(1)
+        if (remaining.isEmpty()) return true
+        return remaining.all { it.digits().toList().sorted() == firstDigitsSorted }
+    }
+}
