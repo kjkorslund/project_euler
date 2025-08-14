@@ -9,3 +9,11 @@ Number.prototype.foobar = function() {
 Number.prototype.isMultipleOf = function(k) {
   return this%k == 0;
 }
+
+Number.prototype.isEven = function() {
+  return this%2 == 0;
+}
+
+Number.prototype.isOdd = function() {
+  return this%2 != 0;
+}
