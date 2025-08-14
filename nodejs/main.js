@@ -1,4 +1,5 @@
 import pg1 from "./pg1.js";
+import {} from "./extensions.js";
 
 // TODO: create structure for developing and running code problems
 const problem = "p1"

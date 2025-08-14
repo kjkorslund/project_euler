@@ -1,6 +1,8 @@
 const pg1 = {};
 export default pg1;
 
+import {Range} from "./utils.js";
+
 /**
  * [Problem 1](https://projecteuler.net/problem=1)
  * 
@@ -12,16 +14,12 @@ export default pg1;
 pg1.p1 = function() {
   // Note:  zero is not considered a natural number in this problem
 
-  // Return true if n is a multiple of k
-  function isMultipleOf(n, k) {
-    return n%k == 0;
-  }
-  
   let sum = 0;
-  for (let i=1; i<1000; i++) {
-    if (isMultipleOf(i, 3) || isMultipleOf(i, 5)) {
+  Range.open(1,1000).foreach(i => {
+    if (i.isMultipleOf(3) || i.isMultipleOf(5)) {
       sum += i;
     }
-  }
+  });
+  console.log(sum.foobar())
   return sum;
 }
