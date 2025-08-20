@@ -41,6 +41,13 @@ export class Primes {
     return this.#knownPrimesSet.has(n);
   }
 
+  at(index) {
+    while(this.#knownPrimes.length < index+1) {
+      this.#generateNextPrime();
+    }
+    return this.#knownPrimes[index];
+  }
+
   findFirst(fn) {
     let knownMatch = this.#knownPrimes.find(fn);
     if (knownMatch) return knownMatch;

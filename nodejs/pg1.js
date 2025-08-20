@@ -1,7 +1,7 @@
 const pg1 = {};
 export default pg1;
 
-import {Range} from "./utils.js";
+import {Primes, Range} from "./utils.js";
 
 /**
  * [Problem 1](https://projecteuler.net/problem=1)
@@ -132,4 +132,13 @@ pg1.p6 = function() {
     sumOfSquares += i*i;
   }
   return Math.abs(sumOfSquares - sum*sum);
+}
+
+/**
+ * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is
+ * 13.  What is the 10,001st prime number?
+ */
+pg1.p7 = function() {
+  let target = 10_001;
+  return Primes.global.at(target-1)
 }
