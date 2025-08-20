@@ -15,7 +15,7 @@ pg1.p1 = function() {
   // Note:  zero is not considered a natural number in this problem
 
   let sum = 0;
-  Range.open(1,1000).foreach(i => {
+  Range.open(1,1000).forEach(i => {
     if (i.isMultipleOf(3) || i.isMultipleOf(5)) {
       sum += i;
     }
@@ -55,4 +55,16 @@ pg1.p2 = function() {
   }
 
   return sum;
+}
+
+/**
+ * The prime factors of 13195 are 5, 7, 13 and 29.
+ * What is the largest prime factor of the number 600851475143?</p>
+ */
+pg1.p3 = function() {
+  console.log(`Prime factors of 13195: ${Number(13195).findPrimeFactors()}`)
+
+  let primeFactors = Number(600851475143).findPrimeFactors();
+  console.log(`Prime factors of 600851475143: ${primeFactors}`)
+  return primeFactors.last();
 }
