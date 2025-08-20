@@ -243,3 +243,16 @@ pg1.p9 = function() {
     }
   }
 }
+
+/**
+ * The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+ * Find the sum of all the primes below two million.
+ */
+pg1.p10 = function() {
+  let sum = 0;
+  for(let p of Primes.global.sequence()) {
+    if (p >= 2_000_000) break;
+    sum += p;
+  }
+  return sum;
+}

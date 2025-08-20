@@ -60,6 +60,15 @@ export class Primes {
     }
   }
 
+  *sequence() {
+    for(let p of this.#knownPrimes) {
+      yield(p);
+    }
+    while(true) {
+      yield(this.#generateNextPrime());
+    }
+  }
+
   #generateNextPrime() {
     let last = this.#knownPrimes.last()
     let n = last+2;
