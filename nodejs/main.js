@@ -2,7 +2,7 @@ import pg1 from "./pg1.js";
 import {} from "./extensions.js";
 
 // TODO: create structure for developing and running code problems
-const problem = "p3"
+const problem = "p4"
 const startTime = Date.now()
 const answer = pg1[problem]();
 const endTime = Date.now()

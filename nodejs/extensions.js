@@ -47,3 +47,14 @@ Number.prototype.findPrimeFactors = function() {
   }
   return primeFactors;
 }
+
+Number.prototype.isPalindromic = function() {
+  return String(this).isPalindrome();
+}
+
+String.prototype.isPalindrome = function() {
+  for(let i=0,j=this.length-1; i<j; i++,j--) {
+    if(this[i] != this[j]) return false;
+  }
+  return true;
+}
