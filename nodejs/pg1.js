@@ -92,3 +92,23 @@ pg1.p4 = function() {
   }
   return largestMatch;
 }
+
+/**
+ * 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+ * What is the smallest positive number that is evenly divisible (divisible with no remainder) by all of the numbers from 1 to 20?
+ */
+pg1.p5 = function() {
+  function isMultipleOfAllUpTo(n, k) {
+    for(let j=k; j>1; j--) {
+      if (!n.isMultipleOf(j)) return false;
+    }
+    return true;
+  }
+
+  let k = 20;
+  for(let i=k; i<Number.MAX_SAFE_INTEGER; i+=k) {
+    if (isMultipleOfAllUpTo(i, k)) {
+      return i;
+    }
+  }
+}
