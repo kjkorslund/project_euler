@@ -99,3 +99,32 @@ class P4 : IProblem<int>
     return solution;
   }
 }
+
+/**
+ * 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+ * What is the smallest positive number that is evenly divisible (divisible with no remainder) by all of the numbers from 1 to 20?
+ */
+class P5 : IProblem<int>
+{
+  public int Solve()
+  {
+    int target = 20;
+    for (int i = target; i < int.MaxValue; i += target)
+    {
+      if (IsFullyDivisibleUpTo(target, i))
+      {
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  private bool IsFullyDivisibleUpTo(int divisor, int n)
+  {
+    for (int d = divisor; d > 1; d--)
+    {
+      if (!n.IsMultipleOf(d)) return false;
+    }
+    return true;
+  }
+}
