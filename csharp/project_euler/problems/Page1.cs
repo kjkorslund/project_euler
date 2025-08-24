@@ -73,3 +73,29 @@ class P3 : IProblem<int>
     return (int)600851475143L.FindPrimeFactors().Last();
   }
 }
+
+/**
+ * A palindromic number reads the same both ways. The largest palindrome made from the product of
+ * two 2-digit numbers is 9009 = 91 x 99.
+ * 
+ * Find the largest palindrome made from the product of two 3-digit numbers.
+ */
+class P4 : IProblem<int>
+{
+  public int Solve()
+  {
+    int solution = 0;
+    for (int i = 1; i < 1000; i++)
+    {
+      for (int j = i; j < 1000; j++)
+      {
+        var product = j * i;
+        if (product > solution && product.IsPalindromic())
+        {
+          solution = product;
+        }
+      }
+    }
+    return solution;
+  }
+}
