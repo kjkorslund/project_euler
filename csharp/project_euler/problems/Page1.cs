@@ -281,3 +281,15 @@ class P9 : IProblem<int>
     return -1;
   }
 }
+
+/**
+ * The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+ * Find the sum of all the primes below two million.
+ */
+class P10 : IProblem<long>
+{
+  public long Solve()
+  {
+    return Primes.Global.TakeWhile(it => it < 2_000_000).Sum();
+  }
+}
