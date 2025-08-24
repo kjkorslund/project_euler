@@ -1,6 +1,7 @@
 // Page 1 problems (P1 - P50)
 
 using Project_euler.Extensions;
+using Project_euler.Utils;
 
 namespace Project_euler.Problems;
 
@@ -153,5 +154,18 @@ class P6 : IProblem<int>
     }
     squareOfSums *= squareOfSums;
     return Math.Abs(sumOfSquares - squareOfSums);
+  }
+}
+
+/**
+ * By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is
+ * 13.  What is the 10,001st prime number?
+ */
+class P7 : IProblem<long>
+{
+  public long Solve()
+  {
+    int target = 10_001;
+    return Primes.Global[target-1];
   }
 }

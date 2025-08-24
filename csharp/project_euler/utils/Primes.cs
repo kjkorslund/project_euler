@@ -53,7 +53,7 @@ public class Primes : IEnumerable<long>
 
   private bool IsPrimeInternal(long n)
   {
-    foreach (var p in _knownPrimes.TakeWhile(p => p * p < n))
+    foreach (var p in _knownPrimes.TakeWhile(p => p * p <= n))
     {
       if (n.IsMultipleOf(p)) return false;
     }
