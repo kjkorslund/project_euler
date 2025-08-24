@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using Project_euler.Problems;
 
-var problem = new P7();
+var problem = new P8();
 var s = Stopwatch.StartNew();
 var answer = problem.Solve();
 s.Stop();
