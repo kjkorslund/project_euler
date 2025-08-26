@@ -1,7 +1,7 @@
 import time
 import problems.page1
 
-solver = problems.page1.P3
+solver = problems.page1.P4
 start_time = time.time()
 answer = solver();
 end_time = time.time()

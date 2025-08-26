@@ -1,4 +1,4 @@
-from extensions import IntExt
+from extensions import IntExt, StrExt
 
 # [Problem 1](https://projecteuler.net/problem=1)
 # 
@@ -44,3 +44,16 @@ def P2():
 # What is the largest prime factor of the number 600851475143?</p>
 def P3():
   return IntExt.find_prime_factors(600851475143)[-1]
+
+# A palindromic number reads the same both ways. The largest palindrome made from the product of
+# two 2-digit numbers is 9009 = 91 x 99.
+# 
+# Find the largest palindrome made from the product of two 3-digit numbers.
+def P4():
+  result = 0
+  for i in range(1,1000):
+    for j in range(i,1000):
+      product = i*j
+      if product > result and IntExt.is_palindromic(product):
+        result = product
+  return result
