@@ -1,8 +1,7 @@
 import time
-from extensions import IntExt
 import problems.page1
 
-solver = problems.page1.P2
+solver = problems.page1.P3
 start_time = time.time()
 answer = solver();
 end_time = time.time()
