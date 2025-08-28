@@ -57,3 +57,17 @@ def P4():
       if product > result and IntExt.is_palindromic(product):
         result = product
   return result
+
+# 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+# What is the smallest positive number that is evenly divisible (divisible with no remainder) by all of the numbers from 1 to 20?
+def P5():
+  def evenlyDivisibleUpTo(n, dMax):
+    for d in range(dMax, 1, -1):
+      if not IntExt.is_multiple_of(n, d): return False
+    return True
+
+  increment = 20
+  candidate = increment
+  while True:
+    if evenlyDivisibleUpTo(candidate, increment): return candidate
+    candidate += increment

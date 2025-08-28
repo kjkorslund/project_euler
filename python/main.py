@@ -1,7 +1,9 @@
 import time
 import problems.page1
 
-solver = problems.page1.P4
+# NOTE: recommend using pypy as the interpreter, as many of the solvers have
+#       nested loops that run significantly faster with Pypy's JIT compiler
+solver = problems.page1.P5
 start_time = time.time()
 answer = solver();
 end_time = time.time()
