@@ -71,3 +71,24 @@ def P5():
   while True:
     if evenlyDivisibleUpTo(candidate, increment): return candidate
     candidate += increment
+
+# The sum of the squares of the first ten natural numbers is,
+#     1^2 + 2^2 + ... + 10^2 = 385
+# The square of the sum of the first ten natural numbers is,
+#     (1 + 2 + ... + 10)^2 = 55^2 = 3025
+# Hence the difference between the sum of the squares of the first ten natural numbers and the
+# square of the sum is 3025 - 385 = 2640.
+# 
+# Find the difference between the sum of the squares of the first one hundred natural numbers and
+# the square of the sum.
+def P6():
+  end = 100
+  sumOfSquares = 0
+  sums = 0
+  for i in range(1, end+1):
+    sumOfSquares += i*i
+    sums += i
+  squareOfSums = sums*sums
+  result = abs(sumOfSquares - squareOfSums)
+  print(f"|{sumOfSquares} - {squareOfSums}| = {result}")
+  return result
