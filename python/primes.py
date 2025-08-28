@@ -7,6 +7,7 @@ class Primes:
     self.knownPrimesSet = set(self.knownPrimes)
   
   def __getitem__(self, key):
+    while len(self.knownPrimes) <= key: self.__generate_next_prime()
     return self.knownPrimes[key]
 
   def sequence(self):

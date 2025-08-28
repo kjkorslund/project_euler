@@ -1,4 +1,5 @@
 from extensions import IntExt, StrExt
+from primes import global_primes as primes
 
 # [Problem 1](https://projecteuler.net/problem=1)
 # 
@@ -92,3 +93,9 @@ def P6():
   result = abs(sumOfSquares - squareOfSums)
   print(f"|{sumOfSquares} - {squareOfSums}| = {result}")
   return result
+
+# By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is
+# 13.  What is the 10,001st prime number?
+def P7():
+  target = 10_001
+  return primes[target-1]
