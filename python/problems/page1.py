@@ -1,4 +1,6 @@
-from extensions import IntExt, StrExt
+from itertools import takewhile
+
+from extensions import IntExt
 from primes import global_primes as primes
 
 # [Problem 1](https://projecteuler.net/problem=1)
@@ -184,3 +186,11 @@ def P9():
         print(f"{a}^2 + {b}^2 == {c}^2 == {a*b*c}")
         return a*b*c
   return -1
+
+# 
+# The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+# Find the sum of all the primes below two million.
+# 
+def P10():
+  target = 2_000_000
+  return sum(takewhile(lambda it: it < target, primes))
